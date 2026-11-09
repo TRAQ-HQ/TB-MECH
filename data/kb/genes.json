@@ -1,0 +1,50 @@
+[
+  {
+    "gene": "rpoB",
+    "locus_tag": "Rv0667",
+    "product": "RNA polymerase beta subunit",
+    "role": "Rifampicin target; drug binds the beta subunit and blocks RNA elongation",
+    "verified": false,
+    "sources": []
+  },
+  {
+    "gene": "rpoC",
+    "locus_tag": "Rv0668",
+    "product": "RNA polymerase beta' subunit",
+    "role": "RNA polymerase subunit; candidate site of compensatory variants",
+    "verified": false,
+    "sources": []
+  },
+  {
+    "gene": "katG",
+    "locus_tag": "Rv1908c",
+    "product": "Catalase-peroxidase",
+    "role": "Activates the prodrug isoniazid",
+    "verified": false,
+    "sources": []
+  },
+  {
+    "gene": "inhA",
+    "locus_tag": "Rv1484",
+    "product": "Enoyl-ACP reductase",
+    "role": "Mycolic acid synthesis; isoniazid target",
+    "verified": false,
+    "sources": []
+  },
+  {
+    "gene": "embB",
+    "locus_tag": "Rv3795",
+    "product": "Arabinosyltransferase",
+    "role": "Cell-wall arabinogalactan synthesis; ethambutol target",
+    "verified": false,
+    "sources": []
+  },
+  {
+    "gene": "gyrA",
+    "locus_tag": "Rv0006",
+    "product": "DNA gyrase subunit A",
+    "role": "Fluoroquinolone target",
+    "verified": false,
+    "sources": []
+  }
+]

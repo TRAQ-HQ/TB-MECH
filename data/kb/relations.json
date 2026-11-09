@@ -1,0 +1,20 @@
+[
+  {
+    "relation_id": "R_comp_001",
+    "type": "compensates_for",
+    "from_variant": "rpoC_V483G",
+    "to_variant": "rpoB_S450L",
+    "claim": "Candidate compensatory variant associated with restoring fitness in rifampicin-resistant strains carrying rpoB mutations.",
+    "evidence_type": "association",
+    "grade": "C",
+    "source_group": "VERIFY_comp_001",
+    "citation": {
+      "pmid": null,
+      "doi": null,
+      "text": "VERIFY (e.g. Comas et al. 2012, Nature Genetics; de Vos et al. 2013, AAC). Do not rely on this until checked."
+    },
+    "limitations": "Association and inference; not proof of mechanism for every strain background.",
+    "verified": false,
+    "direction": "supports"
+  }
+]

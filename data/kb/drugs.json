@@ -1,0 +1,43 @@
+[
+  {
+    "drug": "rifampicin",
+    "abbr": "RIF",
+    "class": "rifamycin",
+    "primary_genes": [
+      "rpoB"
+    ],
+    "notes": "",
+    "verified": false
+  },
+  {
+    "drug": "isoniazid",
+    "abbr": "INH",
+    "class": "isonicotinic acid hydrazide",
+    "primary_genes": [
+      "katG",
+      "inhA"
+    ],
+    "notes": "",
+    "verified": false
+  },
+  {
+    "drug": "ethambutol",
+    "abbr": "EMB",
+    "class": "ethylenediamine derivative",
+    "primary_genes": [
+      "embB"
+    ],
+    "notes": "",
+    "verified": false
+  },
+  {
+    "drug": "fluoroquinolones",
+    "abbr": "FQ",
+    "class": "quinolone",
+    "primary_genes": [
+      "gyrA"
+    ],
+    "notes": "",
+    "verified": false
+  }
+]

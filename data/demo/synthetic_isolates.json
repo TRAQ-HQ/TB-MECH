@@ -1,0 +1,6 @@
+[
+  {"isolate_id":"SYN-001","synthetic":true,"variants":["rpoB S450L","katG S315T","rpoC V483G"],"phenotype":{"rifampicin":"R","isoniazid":"R"}},
+  {"isolate_id":"SYN-002","synthetic":true,"variants":["gyrA D94G"],"phenotype":{}},
+  {"isolate_id":"SYN-003","synthetic":true,"variants":["rpoB S450L","katG A999V"],"phenotype":{"rifampicin":"S"}},
+  {"isolate_id":"SYN-004","synthetic":true,"variants":["embB M306V","inhA c.-15C>T"],"phenotype":{}}
+]

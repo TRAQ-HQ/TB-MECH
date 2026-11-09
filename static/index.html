@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TB-MECH Voice</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+<style>
+:root{--bg:#fafafa;--fg:#1a1a1a;--card:#fff;--bd:#d9d9d9;--muted:#666;--acc:#0b5fff;--warn:#b45309;--bad:#b91c1c;--ok:#15803d}
+@media (prefers-color-scheme:dark){:root{--bg:#121212;--fg:#eee;--card:#1c1c1c;--bd:#3a3a3a;--muted:#aaa;--acc:#6ea8ff;--warn:#fbbf24;--bad:#f87171;--ok:#4ade80}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--fg)}
+header,main{max-width:980px;margin:0 auto;padding:12px 16px}
+h1{font-size:1.3rem;margin:.2rem 0}
+.banner{padding:8px 12px;border-radius:6px;margin:6px 0;font-size:.9rem;border:1px solid var(--bd);background:var(--card)}
+.banner.mock{border-color:var(--bad);color:var(--bad);font-weight:600}.banner.syn{border-color:var(--warn);color:var(--warn)}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+nav button,.btn{border:1px solid var(--bd);background:var(--card);color:var(--fg);padding:8px 12px;border-radius:6px;cursor:pointer;font:inherit}
+nav button[aria-selected=true]{border-color:var(--acc);color:var(--acc);font-weight:600}
+.btn.primary{background:var(--acc);color:#fff;border-color:var(--acc)}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px;margin:10px 0}
+label{display:block;font-weight:600;margin:6px 0 2px}input,select,textarea{width:100%;padding:8px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--fg);font:inherit}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1;min-width:160px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--bd);border-radius:999px;padding:3px 10px;margin:3px}
+.chip input{width:130px;padding:2px 6px}.chip button{border:0;background:none;cursor:pointer;color:var(--bad);font-size:1rem}
+.badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.78rem;border:1px solid var(--bd);margin-right:4px}
+.badge.unv{color:var(--warn);border-color:var(--warn)}.badge.ver{color:var(--ok);border-color:var(--ok)}
+.bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden;max-width:220px}.bar>div{height:100%;background:var(--acc)}
+.muted{color:var(--muted);font-size:.88rem}.err{color:var(--bad)}
+table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--bd);padding:6px;text-align:left}
+#cy{height:420px;border:1px solid var(--bd);border-radius:8px;background:var(--card)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <h1>TB-MECH Voice <span class="muted">evidence-grounded TB drug-resistance interpretation</span></h1>
+  <div class="banner">Research-support prototype. Not diagnostic; not for treatment decisions. Associations are not proof of mechanism.</div>
+  <div id="modeBanner"></div>
+  <div class="banner syn" id="synBanner" hidden>Synthetic demonstration data</div>
+  <div class="row"><div><label for="lang">Language</label><select id="lang"></select></div><div></div></div>
+</header>
+<main>
+<nav role="tablist" id="tabs"></nav>
+
+<section id="tab-input">
+  <div class="card">
+    <label for="demo">Synthetic demo isolate</label>
+    <select id="demo"><option value="">(none)</option></select>
+    <label for="txt">Type or dictate mutations (e.g. "rpoB S450L and katG S315T")</label>
+    <textarea id="txt" rows="2"></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" id="mic" aria-pressed="false">🎤 Record (max 30 s)</button>
+      <button class="btn" id="parse">Parse text</button>
+    </div>
+    <p class="muted" id="micMsg"></p>
+  </div>
+  <div class="card">
+    <strong>Confirm mutations</strong> <span class="muted">Review gene names and notation; speech recognition can be wrong. Analysis never starts without confirmation.</span>
+    <div id="chips"></div><div id="frag" class="muted"></div>
+    <div class="row" id="pheno"></div>
+    <button class="btn primary" id="analyze">Confirm and analyse</button>
+    <p class="err" id="inErr" role="alert"></p>
+  </div>
+</section>
+
+<section id="tab-results" hidden>
+  <div id="resBody" class="muted">Run an analysis first.</div>
+</section>
+
+<section id="tab-graph" hidden>
+  <div class="row"><div><label for="gfilter">Show node type</label>
+    <select id="gfilter"><option value="">all</option><option>variant</option><option>gene</option><option>drug</option><option>evidence</option></select></div></div>
+  <div id="cy"></div><div class="card" id="edgeInfo">Click an edge to see its evidence record.</div>
+</section>
+
+<section id="tab-ask" hidden>
+  <div class="card">
+    <label for="q">Question (text or voice)</label>
+    <input id="q" placeholder="e.g. Explain the resistance evidence / Any compensatory variants? / What are the evidence gaps?">
+    <div class="row" style="margin-top:8px"><button class="btn" id="qmic">🎤 Ask by voice</button><button class="btn primary" id="ask">Ask</button></div>
+    <p class="muted" id="qMsg"></p>
+  </div>
+  <div class="card" id="answer" hidden>
+    <div id="ansBadges"></div><p id="ansText"></p><div class="muted" id="ansEv"></div>
+    <button class="btn" id="play">🔊 Play (Timbre)</button> <span class="muted" id="playMsg"></span><audio id="audio" controls hidden></audio>
+  </div>
+</section>
+
+<section id="tab-export" hidden>
+  <div class="card"><div class="row">
+    <a class="btn" id="expJson" href="#" target="_blank" rel="noopener">Download JSON report</a>
+    <a class="btn" id="expMd" href="#" target="_blank" rel="noopener">Open Markdown report</a></div>
+    <h3>Limitations</h3><ul id="limList"></ul></div>
+</section>
+</main>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let META={},ANALYSIS=null,CAND=[],CY=null,LASTANS="";
+const TABS=[["input","Input"],["results","Results"],["graph","Graph"],["ask","Ask"],["export","Export"]];
+
+async function api(path,opts){const r=await fetch("/api"+path,opts);
+  if(!r.ok){let m=r.statusText;try{const j=await r.json();m=(j.error&&j.error.message)||(j.detail&&(j.detail.message||JSON.stringify(j.detail)))||m}catch{}throw new Error(m)}
+  return r}
+const j=async(p,o)=>(await api(p,o)).json();
+const post=(p,b)=>j(p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});
+
+function show(t){TABS.forEach(([k])=>{$("#tab-"+k).hidden=k!==t;document.querySelector(`[data-t=${k}]`).setAttribute("aria-selected",k===t)});
+  if(t==="graph")loadGraph()}
+function initTabs(){$("#tabs").innerHTML=TABS.map(([k,l])=>`<button role="tab" data-t="${k}" aria-selected="false">${l}</button>`).join("");
+  document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>show(b.dataset.t));show("input")}
+
+async function init(){
+  initTabs();META=await j("/meta");
+  $("#lang").innerHTML=META.languages.map(l=>`<option ${l===META.default_language?"selected":""}>${l}</option>`).join("");
+  $("#modeBanner").innerHTML=(META.gnani_mock?'<div class="banner mock">MOCK MODE: Gnani calls are simulated. Turn off for the real demo.</div>':"")+
+    `<div class="banner muted">KB ${esc(META.kb_version)} · LLM mode: ${esc(META.llm_mode)} · ${META.unverified_records} unverified evidence records</div>`;
+  const d=await j("/demo-isolates");
+  $("#demo").innerHTML='<option value="">(none)</option>'+d.map((x,i)=>`<option value="${i}">${esc(x.isolate_id)}: ${esc(x.variants.join(", "))}</option>`).join("");
+  window.DEMOS=d;
+}
+$("#demo").onchange=e=>{const i=e.target.value;if(i==="")return;const d=DEMOS[i];
+  CAND=d.variants.map(v=>({raw:v,gene:v.split(" ")[0],variant:v.split(" ").slice(1).join(" "),confidence:"high",in_kb:null}));
+  window.PHEN=d.phenotype;window.ISO=d.isolate_id;renderChips();renderPheno()};
+
+function renderChips(){
+  $("#chips").innerHTML=CAND.map((c,i)=>`<span class="chip"><input aria-label="gene" value="${esc(c.gene)}" data-i="${i}" data-k="gene" size="6">
+   <input aria-label="variant" value="${esc(c.variant)}" data-i="${i}" data-k="variant" size="8">
+   <span class="badge">${esc(c.confidence)}</span>${c.in_kb===true?'<span class="badge ver">in KB</span>':c.in_kb===false?'<span class="badge unv">not in KB</span>':""}
+   <button aria-label="remove" data-del="${i}">✕</button></span>`).join("")||'<span class="muted">No mutations yet.</span>';
+  $("#chips").querySelectorAll("input").forEach(el=>el.oninput=()=>{CAND[el.dataset.i][el.dataset.k]=el.value;CAND[el.dataset.i].raw=CAND[el.dataset.i].gene+" "+CAND[el.dataset.i].variant});
+  $("#chips").querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{CAND.splice(b.dataset.del,1);renderChips()});
+}
+function renderPheno(){const drugs=["rifampicin","isoniazid","ethambutol","fluoroquinolones"];window.PHEN=window.PHEN||{};
+  $("#pheno").innerHTML=drugs.map(d=>`<div><label>${d} phenotype (optional)</label><select data-d="${d}"><option value="">not supplied</option>
+   <option value="R" ${PHEN[d]==="R"?"selected":""}>R</option><option value="S" ${PHEN[d]==="S"?"selected":""}>S</option></select></div>`).join("");
+  $("#pheno").querySelectorAll("select").forEach(s=>s.onchange=()=>{if(s.value)PHEN[s.dataset.d]=s.value;else delete PHEN[s.dataset.d]})}
+
+$("#parse").onclick=async()=>{try{const r=await post("/parse-variants",{text:$("#txt").value});CAND=r.candidates;
+  $("#frag").textContent=r.unparsed_fragments.length?"Could not parse: "+r.unparsed_fragments.join("; "):"";renderChips();renderPheno()}catch(e){$("#inErr").textContent=e.message}};
+
+// --- recording ---
+let rec=null,chunks=[];
+async function record(btn,msgEl,cb){
+  if(rec){rec.stop();return}
+  try{const st=await navigator.mediaDevices.getUserMedia({audio:true});rec=new MediaRecorder(st);chunks=[];
+    rec.ondataavailable=e=>chunks.push(e.data);
+    rec.onstop=async()=>{st.getTracks().forEach(t=>t.stop());btn.textContent=btn.dataset.l;const blob=new Blob(chunks,{type:rec.mimeType});rec=null;
+      msgEl.textContent="Transcribing…";const fd=new FormData();fd.append("audio",blob,"a.webm");fd.append("language_code",$("#lang").value);
+      try{const r=await j("/voice/transcribe",{method:"POST",body:fd});msgEl.textContent=`Transcript (${r.source}): ${r.text}`;cb(r)}catch(e){msgEl.textContent="";msgEl.innerHTML='<span class="err">'+esc(e.message)+" You can type instead.</span>"}};
+    btn.dataset.l=btn.textContent;btn.textContent="⏹ Stop";rec.start();setTimeout(()=>{if(rec&&rec.state==="recording")rec.stop()},30000);
+  }catch{msgEl.innerHTML='<span class="err">Microphone unavailable or permission denied. Please type instead.</span>'}}
+$("#mic").onclick=()=>record($("#mic"),$("#micMsg"),r=>{$("#txt").value=r.text;CAND=r.parsed.candidates;$("#frag").textContent=r.parsed.unparsed_fragments.join("; ");renderChips();renderPheno()});
+$("#qmic").onclick=()=>record($("#qmic"),$("#qMsg"),r=>{$("#q").value=r.text});
+
+$("#analyze").onclick=async()=>{$("#inErr").textContent="";if(!CAND.length){$("#inErr").textContent="Add at least one mutation.";return}
+  try{ANALYSIS=await post("/analyze",{variants:CAND.map(c=>c.gene+" "+c.variant),phenotype:window.PHEN||{},isolate_id:window.ISO||null,synthetic:true});
+    $("#synBanner").hidden=!ANALYSIS.synthetic;renderResults();show("results");
+    $("#expJson").href=`/api/report/${ANALYSIS.analysis_id}.json`;$("#expMd").href=`/api/report/${ANALYSIS.analysis_id}.md`;
+    $("#limList").innerHTML=ANALYSIS.limitations.map(l=>`<li>${esc(l)}</li>`).join("")}catch(e){$("#inErr").textContent=e.message}};
+
+function evHtml(e){return `<li><code>${esc(e.evidence_id)}</code> grade ${esc(e.grade)}, ${esc(e.evidence_type)} ${e.verified?'<span class="badge ver">Verified</span>':'<span class="badge unv">Unverified</span>'}<br><span class="muted">${esc(e.claim)} Source: ${esc(e.citation.text)}${e.citation.pmid?" PMID "+esc(e.citation.pmid):""}</span></li>`}
+function renderResults(){const a=ANALYSIS;let h="";
+  h+=`<div class="card"><strong>Variants</strong><table><tr><th>Variant</th><th>Drug</th><th>Effect</th><th>KB</th></tr>`+
+   a.variants.map(v=>`<tr><td>${esc(v.gene)} ${esc(v.variant)}</td><td>${esc(v.drug)}</td><td>${esc(v.effect_class)}</td><td>${v.verified?'<span class="badge ver">Verified</span>':'<span class="badge unv">Unverified</span>'}</td></tr>`).join("")+`</table></div>`;
+  h+=`<h3>Ranked hypotheses</h3>`+(a.hypotheses.map(x=>`<div class="card"><strong>${esc(x.claim)}</strong><br>
+    <span class="badge">${esc(x.status.replace(/_/g," "))}</span>${x.verified?'<span class="badge ver">Verified</span>':'<span class="badge unv">Unverified</span>'}
+    <div class="muted">Evidence strength index ${x.evidence_index} (ordinal, not a probability) · ${x.independent_sources} independent source(s)</div>
+    <div class="bar" aria-hidden="true"><div style="width:${x.evidence_index*100}%"></div></div>
+    <details><summary>Evidence</summary><ul>${x.supporting.map(evHtml).join("")}${x.contradicting.map(evHtml).join("")}</ul></details></div>`).join("")||'<p class="muted">No hypotheses.</p>');
+  h+=`<h3>Evidence gaps</h3>`+(a.unknown_variants.map(u=>`<div class="card">${esc(u.raw)}: ${esc(u.message)}</div>`).join("")||'<p class="muted">None.</p>');
+  if(a.unparsed_inputs&&a.unparsed_inputs.length)h+=`<p class="muted">Unparsed: ${esc(a.unparsed_inputs.join("; "))}</p>`;
+  if(a.phenotype_checks.length)h+=`<h3>Phenotype checks</h3>`+a.phenotype_checks.map(c=>`<div class="card"><strong>${esc(c.drug)} (${esc(c.phenotype)}): ${esc(c.kind.replace(/_/g," "))}</strong><br>${esc(c.message)}</div>`).join("");
+  h+=`<h3>What-if (knowledge-base sensitivity)</h3><div class="card"><div class="row"><select id="wvar">${a.variants.map(v=>`<option value="${esc(v.variant_id)}">${esc(v.gene)} ${esc(v.variant)}</option>`).join("")}</select><button class="btn" id="wbtn">Remove and re-run</button></div><div id="wout" class="muted"></div></div>`;
+  $("#resBody").innerHTML=h;
+  const wb=$("#wbtn");if(wb)wb.onclick=async()=>{const r=await post(`/analysis/${a.analysis_id}/whatif`,{remove:[$("#wvar").value]});
+    $("#wout").innerHTML=`Lost: ${esc(r.lost_hypotheses.join(", ")||"none")}<br>Changed: ${esc(r.changed_hypotheses.map(c=>c.hypothesis_id+" "+c.from+"→"+c.to).join(", ")||"none")}<br><em>${esc(r.note)}</em>`}}
+
+async function loadGraph(){if(!ANALYSIS){return}
+  const g=await j(`/analysis/${ANALYSIS.analysis_id}/graph`);
+  const filt=$("#gfilter").value;const nodes=g.nodes.filter(n=>!filt||n.data.type===filt||n.data.type==="isolate");
+  const ids=new Set(nodes.map(n=>n.data.id));const edges=g.edges.filter(e=>ids.has(e.data.source)&&ids.has(e.data.target));
+  CY=cytoscape({container:$("#cy"),elements:{nodes,edges},layout:{name:"cose",animate:false},
+   style:[{selector:"node",style:{label:"data(label)","font-size":10,"background-color":"#0b5fff",color:"#888"}},
+    {selector:'node[type="gene"]',style:{"background-color":"#15803d"}},{selector:'node[type="drug"]',style:{"background-color":"#b45309"}},
+    {selector:'node[type="evidence"]',style:{"background-color":"#7c3aed",shape:"diamond"}},{selector:'node[type="isolate"]',style:{"background-color":"#555"}},
+    {selector:"edge",style:{width:2,"curve-style":"bezier","target-arrow-shape":"triangle",label:"data(type)","font-size":8,"line-color":"#aaa","target-arrow-color":"#aaa"}}]});
+  CY.on("tap","edge",ev=>{const d=ev.target.data();$("#edgeInfo").innerHTML=`<strong>${esc(d.type)}</strong><br>`+(d.evidence_id?`Evidence <code>${esc(d.evidence_id)}</code>, grade ${esc(d.grade)}, ${esc(d.evidence_type)}, source group ${esc(d.source_group)}, ${d.verified?"Verified":"Unverified"}`:"Structural edge (no evidence record).")})}
+$("#gfilter").onchange=loadGraph;
+
+$("#ask").onclick=async()=>{if(!ANALYSIS){$("#qMsg").textContent="Run an analysis first.";return}
+  try{const r=await post("/assistant/ask",{analysis_id:ANALYSIS.analysis_id,question:$("#q").value,language:$("#lang").value});
+    LASTANS=r.answer_text;$("#answer").hidden=false;$("#ansText").textContent=r.answer_text;
+    $("#ansBadges").innerHTML=`<span class="badge">${r.source==="evon_v3.3"?"Generated by Evon v3.3":"Template (no LLM)"}</span>`+(r.guardrail.fallback?'<span class="badge unv">guardrail fallback</span>':"")+`<span class="badge">intent: ${esc(r.intent)}</span>`;
+    $("#ansEv").textContent=r.evidence_ids.length?"Evidence: "+r.evidence_ids.join(", "):"";$("#qMsg").textContent=""}catch(e){$("#qMsg").textContent=e.message}};
+$("#play").onclick=async()=>{$("#playMsg").textContent="Synthesising…";
+  try{const r=await api("/voice/speak",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:LASTANS,language:$("#lang").value})});
+    const src=r.headers.get("X-Tts-Source");const a=$("#audio");a.src=URL.createObjectURL(await r.blob());a.hidden=false;a.play().catch(()=>{});
+    $("#playMsg").textContent=src==="mock"?"MOCK audio (silent). Text shown above is what would be spoken.":"Playing: text shown above."}catch(e){$("#playMsg").textContent="Speech failed: "+e.message+" (text answer still shown)"}};
+init();
+</script>
+</body>
+</html>

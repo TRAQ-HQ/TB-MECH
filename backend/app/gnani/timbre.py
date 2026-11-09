@@ -1,0 +1,64 @@
+"""Gnani Timbre text-to-speech wrapper (VERIFY version string in your dashboard: v2.5 beta vs v2.0).
+
+Real mode uses the documented HF route with tts_mode="rest". TODO(VERIFY): voices per language
+and valid language codes at docs.gnani.ai/api/TTS.
+"""
+import asyncio
+import io
+import os
+import wave
+from typing import Literal, Optional
+
+from pydantic import BaseModel
+
+from ..config import get_settings
+from .errors import GnaniError
+
+_pipe = None
+
+
+class SpeechResult(BaseModel):
+    audio_wav: bytes
+    voice: str
+    language_code: str
+    source: Literal["timbre", "mock"]
+
+
+def silent_wav(seconds: float = 0.5, rate: int = 16000) -> bytes:
+    buf = io.BytesIO()
+    with wave.open(buf, "wb") as w:
+        w.setnchannels(1); w.setsampwidth(2); w.setframerate(rate)
+        w.writeframes(b"\x00\x00" * int(rate * seconds))
+    return buf.getvalue()
+
+
+def _run_tts(text: str, voice: str, api_key: str) -> bytes:
+    global _pipe
+    os.environ["GNANI_API_KEY"] = api_key
+    from transformers import pipeline
+    if _pipe is None:
+        _pipe = pipeline("text-to-speech", model="gnani-ai/vachana", trust_remote_code=True)
+    out = _pipe(text, voice=voice, tts_mode="rest", sample_rate=22050, container="wav", encoding="linear_pcm")
+    return out["audio"]
+
+
+async def synthesize(text: str, language_code: str, voice: Optional[str] = None) -> SpeechResult:
+    s = get_settings()
+    voice = voice or s.tts_voice_default
+    if not text.strip():
+        raise GnaniError("empty_text", "Nothing to speak.", 400)
+    if len(text) > 1500:
+        raise GnaniError("text_too_long", "Text is too long to speak.", 400)
+    if s.gnani_mock:
+        return SpeechResult(audio_wav=silent_wav(), voice=voice, language_code=language_code, source="mock")
+    if not s.gnani_api_key:
+        raise GnaniError("missing_api_key", "GNANI_API_KEY is not configured.", 500)
+    try:
+        audio = await asyncio.wait_for(asyncio.to_thread(_run_tts, text, voice, s.gnani_api_key), timeout=60)
+    except asyncio.TimeoutError:
+        raise GnaniError("tts_timeout", "Speech synthesis timed out. The text answer is still shown.")
+    except ImportError:
+        raise GnaniError("sdk_missing", "Install `transformers` and `gnani-vachana` for real speech mode.", 500)
+    except Exception:
+        raise GnaniError("tts_failed", "Speech synthesis failed. The text answer is still shown.")
+    return SpeechResult(audio_wav=audio, voice=voice, language_code=language_code, source="timbre")

@@ -1,0 +1,114 @@
+[
+  {
+    "evidence_id": "E_rpoB_S450L_001",
+    "variant_id": "rpoB_S450L",
+    "claim": "rpoB S450L is reported as associated with rifampicin resistance.",
+    "direction": "supports",
+    "evidence_type": "association",
+    "grade": "B",
+    "source_group": "VERIFY_rpoB_S450L",
+    "citation": {
+      "pmid": null,
+      "doi": null,
+      "text": "VERIFY against WHO catalogue / PubMed"
+    },
+    "limitations": "Common rifampicin-resistance variant (E. coli numbering S531L). VERIFY.",
+    "verified": false
+  },
+  {
+    "evidence_id": "E_rpoB_D435V_001",
+    "variant_id": "rpoB_D435V",
+    "claim": "rpoB D435V is reported as associated with rifampicin resistance.",
+    "direction": "supports",
+    "evidence_type": "association",
+    "grade": "B",
+    "source_group": "VERIFY_rpoB_D435V",
+    "citation": {
+      "pmid": null,
+      "doi": null,
+      "text": "VERIFY against WHO catalogue / PubMed"
+    },
+    "limitations": "Variant in the rifampicin resistance-determining region. VERIFY.",
+    "verified": false
+  },
+  {
+    "evidence_id": "E_katG_S315T_001",
+    "variant_id": "katG_S315T",
+    "claim": "katG S315T is reported as associated with isoniazid resistance.",
+    "direction": "supports",
+    "evidence_type": "association",
+    "grade": "B",
+    "source_group": "VERIFY_katG_S315T",
+    "citation": {
+      "pmid": null,
+      "doi": null,
+      "text": "VERIFY against WHO catalogue / PubMed"
+    },
+    "limitations": "katG activates isoniazid; variant reduces activation. VERIFY.",
+    "verified": false
+  },
+  {
+    "evidence_id": "E_inhA_c-15C>T_001",
+    "variant_id": "inhA_c-15C>T",
+    "claim": "inhA c.-15C>T is reported as associated with isoniazid resistance.",
+    "direction": "supports",
+    "evidence_type": "association",
+    "grade": "B",
+    "source_group": "VERIFY_inhA_c-15C>T",
+    "citation": {
+      "pmid": null,
+      "doi": null,
+      "text": "VERIFY against WHO catalogue / PubMed"
+    },
+    "limitations": "Promoter variant; VERIFY cross-resistance to ethionamide.",
+    "verified": false
+  },
+  {
+    "evidence_id": "E_embB_M306V_001",
+    "variant_id": "embB_M306V",
+    "claim": "embB M306V is reported as associated with ethambutol resistance.",
+    "direction": "supports",
+    "evidence_type": "association",
+    "grade": "C",
+    "source_group": "VERIFY_embB_M306V",
+    "citation": {
+      "pmid": null,
+      "doi": null,
+      "text": "VERIFY against WHO catalogue / PubMed"
+    },
+    "limitations": "VERIFY evidence strength and reports in phenotypically susceptible isolates.",
+    "verified": false
+  },
+  {
+    "evidence_id": "E_gyrA_D94G_001",
+    "variant_id": "gyrA_D94G",
+    "claim": "gyrA D94G is reported as associated with fluoroquinolones resistance.",
+    "direction": "supports",
+    "evidence_type": "association",
+    "grade": "B",
+    "source_group": "VERIFY_gyrA_D94G",
+    "citation": {
+      "pmid": null,
+      "doi": null,
+      "text": "VERIFY against WHO catalogue / PubMed"
+    },
+    "limitations": "DNA gyrase target. VERIFY.",
+    "verified": false
+  },
+  {
+    "evidence_id": "E_gyrA_A90V_001",
+    "variant_id": "gyrA_A90V",
+    "claim": "gyrA A90V is reported as associated with fluoroquinolones resistance.",
+    "direction": "supports",
+    "evidence_type": "association",
+    "grade": "B",
+    "source_group": "VERIFY_gyrA_A90V",
+    "citation": {
+      "pmid": null,
+      "doi": null,
+      "text": "VERIFY against WHO catalogue / PubMed"
+    },
+    "limitations": "DNA gyrase target. VERIFY.",
+    "verified": false
+  }
+]

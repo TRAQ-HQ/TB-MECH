@@ -1,0 +1,112 @@
+[
+  {
+    "variant_id": "rpoB_S450L",
+    "gene": "rpoB",
+    "hgvs_p": "p.Ser450Leu",
+    "short": "S450L",
+    "drug": "rifampicin",
+    "effect_class": "target_alteration",
+    "who_group": null,
+    "who_catalogue_version": "VERIFY",
+    "evidence_ids": [
+      "E_rpoB_S450L_001"
+    ],
+    "verified": false
+  },
+  {
+    "variant_id": "rpoB_D435V",
+    "gene": "rpoB",
+    "hgvs_p": "p.Asp435Val",
+    "short": "D435V",
+    "drug": "rifampicin",
+    "effect_class": "target_alteration",
+    "who_group": null,
+    "who_catalogue_version": "VERIFY",
+    "evidence_ids": [
+      "E_rpoB_D435V_001"
+    ],
+    "verified": false
+  },
+  {
+    "variant_id": "katG_S315T",
+    "gene": "katG",
+    "hgvs_p": "p.Ser315Thr",
+    "short": "S315T",
+    "drug": "isoniazid",
+    "effect_class": "prodrug_activation_loss",
+    "who_group": null,
+    "who_catalogue_version": "VERIFY",
+    "evidence_ids": [
+      "E_katG_S315T_001"
+    ],
+    "verified": false
+  },
+  {
+    "variant_id": "inhA_c-15C>T",
+    "gene": "inhA",
+    "hgvs_p": null,
+    "short": "c.-15C>T",
+    "drug": "isoniazid",
+    "effect_class": "target_overexpression",
+    "who_group": null,
+    "who_catalogue_version": "VERIFY",
+    "evidence_ids": [
+      "E_inhA_c-15C>T_001"
+    ],
+    "verified": false
+  },
+  {
+    "variant_id": "embB_M306V",
+    "gene": "embB",
+    "hgvs_p": "p.Met306Val",
+    "short": "M306V",
+    "drug": "ethambutol",
+    "effect_class": "target_alteration",
+    "who_group": null,
+    "who_catalogue_version": "VERIFY",
+    "evidence_ids": [
+      "E_embB_M306V_001"
+    ],
+    "verified": false
+  },
+  {
+    "variant_id": "gyrA_D94G",
+    "gene": "gyrA",
+    "hgvs_p": "p.Asp94Gly",
+    "short": "D94G",
+    "drug": "fluoroquinolones",
+    "effect_class": "target_alteration",
+    "who_group": null,
+    "who_catalogue_version": "VERIFY",
+    "evidence_ids": [
+      "E_gyrA_D94G_001"
+    ],
+    "verified": false
+  },
+  {
+    "variant_id": "gyrA_A90V",
+    "gene": "gyrA",
+    "hgvs_p": "p.Ala90Val",
+    "short": "A90V",
+    "drug": "fluoroquinolones",
+    "effect_class": "target_alteration",
+    "who_group": null,
+    "who_catalogue_version": "VERIFY",
+    "evidence_ids": [
+      "E_gyrA_A90V_001"
+    ],
+    "verified": false
+  },
+  {
+    "variant_id": "rpoC_V483G",
+    "gene": "rpoC",
+    "hgvs_p": "p.Val483Gly",
+    "short": "V483G",
+    "drug": "rifampicin",
+    "effect_class": "compensatory_candidate",
+    "who_group": null,
+    "who_catalogue_version": "VERIFY",
+    "evidence_ids": [],
+    "verified": false
+  }
+]
