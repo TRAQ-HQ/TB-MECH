@@ -1,9 +1,33 @@
+# Secrets & Local Environment
 .env
+.env.local
+.env.*.local
+
+# Node & Build Outputs
+node_modules/
+dist/
+dist-ssr/
+demo_frames/
+*.local
+
+# Python / Tests Artifacts
 __pycache__/
 *.pyc
 .venv/
 .pytest_cache/
 data/runs/*
 !data/runs/.gitkeep
+
+# Temporary Audio & Media Files
 *.wav
 *.webm
+*.ogg
+*.mp3
+
+# Editor & OS Artifacts
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

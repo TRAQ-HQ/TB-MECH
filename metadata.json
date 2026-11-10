@@ -1,0 +1,6 @@
+{
+  "name": "TB-MECH Voice | Clinical Genomics Resistance Intelligence",
+  "description": "Voice-first, evidence-grounded clinical genomics assistant for interpreting Mycobacterium tuberculosis drug-resistance mutations with WHO 2023 catalogue traceability.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

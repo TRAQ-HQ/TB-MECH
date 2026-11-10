@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 set -e
-cd "$(dirname "$0")/backend"
-exec python -m uvicorn app.main:app --host 0.0.0.0 --port "${PORT:-8000}" --reload
+cd "$(dirname "$0")"
+
+# Start the TB-MECH full-stack application (Vite + Express backend)
+export PORT="${PORT:-3000}"
+exec npm run dev
