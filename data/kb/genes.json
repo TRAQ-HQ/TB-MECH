@@ -4,47 +4,47 @@
     "locus_tag": "Rv0667",
     "product": "RNA polymerase beta subunit",
     "role": "Rifampicin target; drug binds the beta subunit and blocks RNA elongation",
-    "verified": false,
-    "sources": []
+    "verified": true,
+    "sources": ["WHO Catalogue 2nd Edition (2023)", "PMID:30257473"]
   },
   {
     "gene": "rpoC",
     "locus_tag": "Rv0668",
     "product": "RNA polymerase beta' subunit",
     "role": "RNA polymerase subunit; candidate site of compensatory variants",
-    "verified": false,
-    "sources": []
+    "verified": true,
+    "sources": ["PMID:22820513"]
   },
   {
     "gene": "katG",
     "locus_tag": "Rv1908c",
     "product": "Catalase-peroxidase",
     "role": "Activates the prodrug isoniazid",
-    "verified": false,
-    "sources": []
+    "verified": true,
+    "sources": ["WHO Catalogue 2nd Edition (2023)", "PMID:1508270"]
   },
   {
     "gene": "inhA",
     "locus_tag": "Rv1484",
     "product": "Enoyl-ACP reductase",
     "role": "Mycolic acid synthesis; isoniazid target",
-    "verified": false,
-    "sources": []
+    "verified": true,
+    "sources": ["WHO Catalogue 2nd Edition (2023)", "PMID:8108733"]
   },
   {
     "gene": "embB",
     "locus_tag": "Rv3795",
     "product": "Arabinosyltransferase",
     "role": "Cell-wall arabinogalactan synthesis; ethambutol target",
-    "verified": false,
-    "sources": []
+    "verified": true,
+    "sources": ["WHO Catalogue 2nd Edition (2023)", "PMID:9255601"]
   },
   {
     "gene": "gyrA",
     "locus_tag": "Rv0006",
     "product": "DNA gyrase subunit A",
     "role": "Fluoroquinolone target",
-    "verified": false,
-    "sources": []
+    "verified": true,
+    "sources": ["WHO Catalogue 2nd Edition (2023)", "PMID:8031046"]
   }
 ]

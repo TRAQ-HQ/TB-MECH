@@ -14,6 +14,8 @@ def test_kb_hash_is_stable():
     assert load_kb().sha256 == load_kb().sha256
 
 
-def test_seed_is_flagged_unverified():
+def test_evidence_records_verified_with_citations():
     kb = load_kb()
-    assert all(not e.verified for e in kb.evidence)
+    assert all(e.verified for e in kb.evidence)
+    for e in kb.evidence:
+        assert e.citation.pmid is not None

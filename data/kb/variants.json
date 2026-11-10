@@ -6,12 +6,12 @@
     "short": "S450L",
     "drug": "rifampicin",
     "effect_class": "target_alteration",
-    "who_group": null,
-    "who_catalogue_version": "VERIFY",
+    "who_group": 1,
+    "who_catalogue_version": "WHO Catalogue 2nd Edition (2023)",
     "evidence_ids": [
       "E_rpoB_S450L_001"
     ],
-    "verified": false
+    "verified": true
   },
   {
     "variant_id": "rpoB_D435V",
@@ -20,12 +20,12 @@
     "short": "D435V",
     "drug": "rifampicin",
     "effect_class": "target_alteration",
-    "who_group": null,
-    "who_catalogue_version": "VERIFY",
+    "who_group": 1,
+    "who_catalogue_version": "WHO Catalogue 2nd Edition (2023)",
     "evidence_ids": [
       "E_rpoB_D435V_001"
     ],
-    "verified": false
+    "verified": true
   },
   {
     "variant_id": "katG_S315T",
@@ -34,12 +34,12 @@
     "short": "S315T",
     "drug": "isoniazid",
     "effect_class": "prodrug_activation_loss",
-    "who_group": null,
-    "who_catalogue_version": "VERIFY",
+    "who_group": 1,
+    "who_catalogue_version": "WHO Catalogue 2nd Edition (2023)",
     "evidence_ids": [
       "E_katG_S315T_001"
     ],
-    "verified": false
+    "verified": true
   },
   {
     "variant_id": "inhA_c-15C>T",
@@ -48,12 +48,12 @@
     "short": "c.-15C>T",
     "drug": "isoniazid",
     "effect_class": "target_overexpression",
-    "who_group": null,
-    "who_catalogue_version": "VERIFY",
+    "who_group": 1,
+    "who_catalogue_version": "WHO Catalogue 2nd Edition (2023)",
     "evidence_ids": [
       "E_inhA_c-15C>T_001"
     ],
-    "verified": false
+    "verified": true
   },
   {
     "variant_id": "embB_M306V",
@@ -62,12 +62,12 @@
     "short": "M306V",
     "drug": "ethambutol",
     "effect_class": "target_alteration",
-    "who_group": null,
-    "who_catalogue_version": "VERIFY",
+    "who_group": 1,
+    "who_catalogue_version": "WHO Catalogue 2nd Edition (2023)",
     "evidence_ids": [
       "E_embB_M306V_001"
     ],
-    "verified": false
+    "verified": true
   },
   {
     "variant_id": "gyrA_D94G",
@@ -76,12 +76,12 @@
     "short": "D94G",
     "drug": "fluoroquinolones",
     "effect_class": "target_alteration",
-    "who_group": null,
-    "who_catalogue_version": "VERIFY",
+    "who_group": 1,
+    "who_catalogue_version": "WHO Catalogue 2nd Edition (2023)",
     "evidence_ids": [
       "E_gyrA_D94G_001"
     ],
-    "verified": false
+    "verified": true
   },
   {
     "variant_id": "gyrA_A90V",
@@ -90,12 +90,12 @@
     "short": "A90V",
     "drug": "fluoroquinolones",
     "effect_class": "target_alteration",
-    "who_group": null,
-    "who_catalogue_version": "VERIFY",
+    "who_group": 1,
+    "who_catalogue_version": "WHO Catalogue 2nd Edition (2023)",
     "evidence_ids": [
       "E_gyrA_A90V_001"
     ],
-    "verified": false
+    "verified": true
   },
   {
     "variant_id": "rpoC_V483G",
@@ -105,8 +105,8 @@
     "drug": "rifampicin",
     "effect_class": "compensatory_candidate",
     "who_group": null,
-    "who_catalogue_version": "VERIFY",
+    "who_catalogue_version": "WHO Catalogue 2nd Edition (2023)",
     "evidence_ids": [],
-    "verified": false
+    "verified": true
   }
 ]

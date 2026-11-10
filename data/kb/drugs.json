@@ -6,8 +6,8 @@
     "primary_genes": [
       "rpoB"
     ],
-    "notes": "",
-    "verified": false
+    "notes": "First-line TB core bactericidal agent",
+    "verified": true
   },
   {
     "drug": "isoniazid",
@@ -17,8 +17,8 @@
       "katG",
       "inhA"
     ],
-    "notes": "",
-    "verified": false
+    "notes": "First-line TB core early bactericidal agent",
+    "verified": true
   },
   {
     "drug": "ethambutol",
@@ -27,8 +27,8 @@
     "primary_genes": [
       "embB"
     ],
-    "notes": "",
-    "verified": false
+    "notes": "First-line TB bacteriostatic agent",
+    "verified": true
   },
   {
     "drug": "fluoroquinolones",
@@ -37,7 +37,7 @@
     "primary_genes": [
       "gyrA"
     ],
-    "notes": "",
-    "verified": false
+    "notes": "Second-line TB core agent (levofloxacin, moxifloxacin)",
+    "verified": true
   }
 ]

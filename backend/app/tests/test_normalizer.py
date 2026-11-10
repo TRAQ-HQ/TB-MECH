@@ -45,3 +45,13 @@ def test_garbage_gives_fragments():
 def test_gene_without_variant_is_reported():
     r = normalizer.parse_text("rpoB", kb)
     assert r["candidates"] == [] and r["unparsed_fragments"]
+
+
+def test_malayalam_spoken_letters_and_aliases():
+    r = got("ആർപിഒബി എസ് 450 എൽ കൂടാതെ കാറ്റ് ജി എസ് 315 ടി")
+    assert [(g, v) for g, v, *_ in r] == [("rpoB", "S450L"), ("katG", "S315T")]
+
+
+def test_tamil_spoken_letters_and_aliases():
+    r = got("ஆர்பிஓபி எஸ் 450 எல் மற்றும் கேட் ஜி எஸ் 315 டி")
+    assert [(g, v) for g, v, *_ in r] == [("rpoB", "S450L"), ("katG", "S315T")]

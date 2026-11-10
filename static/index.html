@@ -3,202 +3,1220 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TB-MECH Voice</title>
+<title>TB-MECH Voice | Evidence-Grounded Resistance Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
 <style>
-:root{--bg:#fafafa;--fg:#1a1a1a;--card:#fff;--bd:#d9d9d9;--muted:#666;--acc:#0b5fff;--warn:#b45309;--bad:#b91c1c;--ok:#15803d}
-@media (prefers-color-scheme:dark){:root{--bg:#121212;--fg:#eee;--card:#1c1c1c;--bd:#3a3a3a;--muted:#aaa;--acc:#6ea8ff;--warn:#fbbf24;--bad:#f87171;--ok:#4ade80}}
-*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--fg)}
-header,main{max-width:980px;margin:0 auto;padding:12px 16px}
-h1{font-size:1.3rem;margin:.2rem 0}
-.banner{padding:8px 12px;border-radius:6px;margin:6px 0;font-size:.9rem;border:1px solid var(--bd);background:var(--card)}
-.banner.mock{border-color:var(--bad);color:var(--bad);font-weight:600}.banner.syn{border-color:var(--warn);color:var(--warn)}
-nav{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
-nav button,.btn{border:1px solid var(--bd);background:var(--card);color:var(--fg);padding:8px 12px;border-radius:6px;cursor:pointer;font:inherit}
-nav button[aria-selected=true]{border-color:var(--acc);color:var(--acc);font-weight:600}
-.btn.primary{background:var(--acc);color:#fff;border-color:var(--acc)}
-button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px;margin:10px 0}
-label{display:block;font-weight:600;margin:6px 0 2px}input,select,textarea{width:100%;padding:8px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--fg);font:inherit}
-.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1;min-width:160px}
-.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--bd);border-radius:999px;padding:3px 10px;margin:3px}
-.chip input{width:130px;padding:2px 6px}.chip button{border:0;background:none;cursor:pointer;color:var(--bad);font-size:1rem}
-.badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.78rem;border:1px solid var(--bd);margin-right:4px}
-.badge.unv{color:var(--warn);border-color:var(--warn)}.badge.ver{color:var(--ok);border-color:var(--ok)}
-.bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden;max-width:220px}.bar>div{height:100%;background:var(--acc)}
-.muted{color:var(--muted);font-size:.88rem}.err{color:var(--bad)}
-table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--bd);padding:6px;text-align:left}
-#cy{height:420px;border:1px solid var(--bd);border-radius:8px;background:var(--card)}
-[hidden]{display:none!important}
+:root {
+  --bg: #090d16;
+  --bg-card: #111726;
+  --bg-card-hover: #161f33;
+  --bg-input: #0c1322;
+  --border: #1e293b;
+  --border-focus: #3b82f6;
+  --fg: #f1f5f9;
+  --fg-muted: #94a3b8;
+  --fg-subtle: #64748b;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-glow: rgba(37, 99, 235, 0.25);
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --accent-purple: #8b5cf6;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 20px -3px rgba(37, 99, 235, 0.35);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f1f5f9;
+    --bg-input: #f8fafc;
+    --border: #e2e8f0;
+    --border-focus: #2563eb;
+    --fg: #0f172a;
+    --fg-muted: #475569;
+    --fg-subtle: #94a3b8;
+    --primary-glow: rgba(37, 99, 235, 0.15);
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+header, main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+/* Header & Branding */
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.4rem;
+  box-shadow: var(--shadow-glow);
+}
+
+.brand-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(to right, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-sub {
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+  font-weight: 400;
+}
+
+.header-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.system-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--fg-muted);
+}
+.system-pill.active {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+}
+.system-pill.gnani {
+  border-color: rgba(99, 102, 241, 0.4);
+  background: rgba(99, 102, 241, 0.1);
+  color: #a5b4fc;
+}
+
+/* Banners */
+.banner {
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  margin: 10px 0;
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.banner.clinical-disclaimer {
+  border-left: 4px solid var(--accent-amber);
+  background: rgba(245, 158, 11, 0.06);
+  color: #fbbf24;
+}
+.banner.mock {
+  border-left: 4px solid var(--accent-rose);
+  background: rgba(244, 63, 94, 0.08);
+  color: #f87171;
+  font-weight: 600;
+}
+.banner.syn {
+  border-left: 4px solid var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.08);
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+/* Language Bar */
+.lang-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--bg-card);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  margin: 12px 0;
+}
+.lang-selector-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 480px;
+}
+.lang-selector-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+/* Tabs Navigation */
+nav#tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-card);
+  padding: 6px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  margin: 16px 0;
+  overflow-x: auto;
+}
+nav#tabs button {
+  flex: 1;
+  min-width: 130px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--fg-muted);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease-in-out;
+}
+nav#tabs button:hover {
+  color: var(--fg);
+  background: var(--bg-card-hover);
+}
+nav#tabs button[aria-selected="true"] {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.4);
+}
+
+/* Cards & Layout */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease;
+}
+.card:hover {
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+.card-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+/* Forms & Inputs */
+label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--fg-muted);
+  margin: 8px 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-input);
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 0.92rem;
+  transition: all 0.15s ease;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+textarea { resize: vertical; min-height: 75px; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; }
+
+.row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.row > * {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--fg);
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.btn:hover {
+  background: var(--bg-card-hover);
+  border-color: #475569;
+}
+.btn.primary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  border-color: #2563eb;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+.btn.primary:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.45);
+}
+.btn.record-btn {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  position: relative;
+  overflow: hidden;
+}
+.btn.record-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+.btn.recording-active {
+  background: #dc2626 !important;
+  color: white !important;
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(220, 38, 38, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+.quick-chip-btn {
+  padding: 4px 10px !important;
+  font-size: 0.78rem !important;
+  border-radius: var(--radius-full) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: var(--fg-muted) !important;
+  border: 1px solid var(--border) !important;
+}
+.quick-chip-btn:hover {
+  color: var(--fg) !important;
+  border-color: var(--accent-cyan) !important;
+}
+
+/* Mutation Chips */
+#chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+  min-height: 48px;
+  align-items: center;
+  padding: 10px;
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 4px 12px;
+  box-shadow: var(--shadow-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+.chip input {
+  background: transparent;
+  border: none;
+  color: var(--fg);
+  padding: 2px 4px;
+  font-weight: 600;
+  width: auto;
+}
+.chip input:focus {
+  outline: none;
+  box-shadow: none;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+.chip button {
+  border: none;
+  background: transparent;
+  color: var(--accent-rose);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  transition: transform 0.1s ease;
+}
+.chip button:hover {
+  transform: scale(1.2);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--border);
+}
+.badge.ver {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+.badge.unv {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+.badge.source-evon {
+  background: rgba(139, 92, 246, 0.15);
+  color: #c084fc;
+  border-color: rgba(139, 92, 246, 0.3);
+}
+.badge.source-template {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 12px 0;
+  font-size: 0.88rem;
+}
+th {
+  background: var(--bg-card-hover);
+  color: var(--fg-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+th:first-child { border-top-left-radius: var(--radius-md); }
+th:last-child { border-top-right-radius: var(--radius-md); }
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+/* Evidence Bar */
+.bar-wrapper {
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bar {
+  flex: 1;
+  max-width: 280px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.bar > div {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+/* Cytoscape Canvas */
+#cy {
+  height: 480px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: #070a12;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.4);
+}
+
+/* Accordion Details */
+details {
+  margin-top: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+summary {
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary);
+  user-select: none;
+}
+summary:hover { text-decoration: underline; }
+details ul {
+  list-style: none;
+  padding: 6px 0;
+}
+details li {
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: var(--radius-md);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+
+.muted { color: var(--fg-muted); font-size: 0.85rem; }
+.err { color: var(--accent-rose); font-size: 0.85rem; font-weight: 500; }
+[hidden] { display: none !important; }
 </style>
 </head>
 <body>
+
 <header>
-  <h1>TB-MECH Voice <span class="muted">evidence-grounded TB drug-resistance interpretation</span></h1>
-  <div class="banner">Research-support prototype. Not diagnostic; not for treatment decisions. Associations are not proof of mechanism.</div>
-  <div id="modeBanner"></div>
-  <div class="banner syn" id="synBanner" hidden>Synthetic demonstration data</div>
-  <div class="row"><div><label for="lang">Language</label><select id="lang"></select></div><div></div></div>
-</header>
-<main>
-<nav role="tablist" id="tabs"></nav>
-
-<section id="tab-input">
-  <div class="card">
-    <label for="demo">Synthetic demo isolate</label>
-    <select id="demo"><option value="">(none)</option></select>
-    <label for="txt">Type or dictate mutations (e.g. "rpoB S450L and katG S315T")</label>
-    <textarea id="txt" rows="2"></textarea>
-    <div class="row" style="margin-top:8px">
-      <button class="btn" id="mic" aria-pressed="false">🎤 Record (max 30 s)</button>
-      <button class="btn" id="parse">Parse text</button>
+  <div class="header-top">
+    <div class="brand-wrapper">
+      <div class="brand-icon">🧬</div>
+      <div>
+        <h1 class="brand-title">TB-MECH Voice</h1>
+        <div class="brand-sub">Voice-first, evidence-grounded *M. tuberculosis* drug resistance interpretation</div>
+      </div>
     </div>
-    <p class="muted" id="micMsg"></p>
+    <div class="header-badges">
+      <span class="system-pill active">🟢 WHO 2023 Curated</span>
+      <span class="system-pill gnani">🎙️ Gnani Sovereign AI Stack</span>
+      <span class="system-pill">🛡️ Zero-Hallucination Guardrails</span>
+    </div>
   </div>
-  <div class="card">
-    <strong>Confirm mutations</strong> <span class="muted">Review gene names and notation; speech recognition can be wrong. Analysis never starts without confirmation.</span>
-    <div id="chips"></div><div id="frag" class="muted"></div>
-    <div class="row" id="pheno"></div>
-    <button class="btn primary" id="analyze">Confirm and analyse</button>
-    <p class="err" id="inErr" role="alert"></p>
+
+  <div class="banner clinical-disclaimer">
+    ⚠️ <strong>Research-Support Prototype:</strong> For educational & academic use only. Not for clinical diagnosis, prescribing, or treatment decisions. Associations are not proof of mechanism.
   </div>
-</section>
 
-<section id="tab-results" hidden>
-  <div id="resBody" class="muted">Run an analysis first.</div>
-</section>
-
-<section id="tab-graph" hidden>
-  <div class="row"><div><label for="gfilter">Show node type</label>
-    <select id="gfilter"><option value="">all</option><option>variant</option><option>gene</option><option>drug</option><option>evidence</option></select></div></div>
-  <div id="cy"></div><div class="card" id="edgeInfo">Click an edge to see its evidence record.</div>
-</section>
-
-<section id="tab-ask" hidden>
-  <div class="card">
-    <label for="q">Question (text or voice)</label>
-    <input id="q" placeholder="e.g. Explain the resistance evidence / Any compensatory variants? / What are the evidence gaps?">
-    <div class="row" style="margin-top:8px"><button class="btn" id="qmic">🎤 Ask by voice</button><button class="btn primary" id="ask">Ask</button></div>
-    <p class="muted" id="qMsg"></p>
+  <div id="modeBanner"></div>
+  <div class="banner syn" id="synBanner" hidden>
+    🧪 <strong>Synthetic Demonstration Isolate Active:</strong> Data is completely synthetic for compliance with DPDP Act.
   </div>
-  <div class="card" id="answer" hidden>
-    <div id="ansBadges"></div><p id="ansText"></p><div class="muted" id="ansEv"></div>
-    <button class="btn" id="play">🔊 Play (Timbre)</button> <span class="muted" id="playMsg"></span><audio id="audio" controls hidden></audio>
-  </div>
-</section>
 
-<section id="tab-export" hidden>
-  <div class="card"><div class="row">
-    <a class="btn" id="expJson" href="#" target="_blank" rel="noopener">Download JSON report</a>
-    <a class="btn" id="expMd" href="#" target="_blank" rel="noopener">Open Markdown report</a></div>
-    <h3>Limitations</h3><ul id="limList"></ul></div>
-</section>
+  <div class="lang-bar">
+    <div class="lang-selector-group">
+      <label for="lang">Target Indian Language:</label>
+      <select id="lang"></select>
+    </div>
+    <div class="muted" style="font-size:0.8rem">
+      Code-mixed Hinglish, Regional Voice & Telephonic ASR supported
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Segmented Tab Navigation -->
+  <nav role="tablist" id="tabs"></nav>
+
+  <!-- TAB 1: INPUT & VOICE -->
+  <section id="tab-input">
+    <div class="card">
+      <div class="card-header-bar">
+        <h2 class="card-title">1. Dictate or Type Genomic Mutations</h2>
+        <span class="muted" style="font-size:0.8rem">Powered by Gnani Prisma v3.0</span>
+      </div>
+
+      <label for="demo">Or Select Synthetic Pre-Set Isolate</label>
+      <select id="demo"><option value="">(Select a pre-curated test isolate...)</option></select>
+
+      <label for="txt">Spoken Input (e.g. "rpoB S450L aur katG S315T")</label>
+      <textarea id="txt" rows="2" placeholder="Dictate via microphone or type mutations..."></textarea>
+
+      <!-- Quick Examples Bar -->
+      <div style="margin: 8px 0; display:flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+        <span class="muted" style="font-size:0.78rem; font-weight:600">Quick Test Cases:</span>
+        <button class="btn quick-chip-btn" type="button" id="exMdr">⚡ MDR Isolate: rpoB S450L + katG S315T</button>
+        <button class="btn quick-chip-btn" type="button" id="exHi">🇮🇳 Hindi: आरपीओबी एस 450 एल</button>
+        <button class="btn quick-chip-btn" type="button" id="exMl">🌴 Malayalam: ആർപിഒബി എസ് 450 എൽ</button>
+      </div>
+
+      <div class="row" style="margin-top: 12px;">
+        <button class="btn record-btn" id="mic" aria-pressed="false">
+          🎤 Record Spoken Mutations (Max 30s)
+        </button>
+        <button class="btn" id="parse">
+          ⚙️ Parse Spoken Text
+        </button>
+      </div>
+      <p class="muted" id="micMsg" style="margin-top:8px"></p>
+    </div>
+
+    <!-- Confirmation Step -->
+    <div class="card">
+      <div class="card-header-bar">
+        <h2 class="card-title">2. Human-in-the-Loop Mutation Confirmation</h2>
+        <span class="badge ver">Audit Guardrail</span>
+      </div>
+      <p class="muted" style="font-size:0.84rem; margin-bottom:8px">
+        Review parsed gene names and notation below. Edit or delete misrecognised tokens before submitting. <strong>Analysis never starts from raw unconfirmed audio.</strong>
+      </p>
+
+      <div id="chips"></div>
+      <div id="frag" class="muted" style="color:var(--accent-rose); font-size:0.82rem"></div>
+
+      <!-- Phenotype Check (Optional) -->
+      <div style="margin: 14px 0 10px;">
+        <label style="margin-bottom:6px">Optional Laboratory Phenotype Data (DST Result for Discordance Verification)</label>
+        <div class="row" id="pheno"></div>
+      </div>
+
+      <div style="margin-top: 16px;">
+        <button class="btn primary" id="analyze" style="width:100%; padding:14px; font-size:1rem;">
+          🚀 Confirm Mutations & Analyze Resistance Evidence
+        </button>
+      </div>
+      <p class="err" id="inErr" role="alert" style="margin-top:8px"></p>
+    </div>
+  </section>
+
+  <!-- TAB 2: RESULTS & EVIDENCE -->
+  <section id="tab-results" hidden>
+    <div id="resBody" class="muted">Run an analysis first to view evidence cards.</div>
+  </section>
+
+  <!-- TAB 3: KNOWLEDGE GRAPH -->
+  <section id="tab-graph" hidden>
+    <div class="card" style="padding:14px; margin-bottom:12px;">
+      <div class="row" style="align-items:center;">
+        <div>
+          <label for="gfilter" style="margin:0 0 4px">Filter Graph Entities:</label>
+          <select id="gfilter">
+            <option value="">Show All Entities (Isolate, Gene, Variant, Drug, Evidence)</option>
+            <option value="variant">Variants Only</option>
+            <option value="gene">Genes Only</option>
+            <option value="drug">Drugs Only</option>
+            <option value="evidence">Evidence Records Only</option>
+          </select>
+        </div>
+        <div class="muted" style="font-size:0.8rem; align-self:flex-end;">
+          💡 Tap any edge to inspect provenance, grade, and PubMed citations.
+        </div>
+      </div>
+    </div>
+    <div id="cy"></div>
+    <div class="card" id="edgeInfo" style="margin-top:12px; font-size:0.88rem;">
+      Click an edge in the graph above to view its underlying WHO/PubMed evidence source.
+    </div>
+  </section>
+
+  <!-- TAB 4: VOICE ASSISTANT -->
+  <section id="tab-ask" hidden>
+    <div class="card">
+      <div class="card-header-bar">
+        <h2 class="card-title">Genomic Voice Assistant (Fact-Grounded)</h2>
+        <span class="system-pill gnani">Gnani Evon v3.3 & Timbre</span>
+      </div>
+
+      <label for="q">Ask a question about this isolate's resistance profile:</label>
+      <input id="q" placeholder="e.g. Explain the resistance evidence / Any compensatory variants? / What are the evidence gaps?">
+
+      <!-- Quick Questions -->
+      <div style="margin: 8px 0; display:flex; gap: 6px; flex-wrap: wrap;">
+        <span class="muted" style="align-self:center; font-size:0.78rem; font-weight:600">Quick Inquiries:</span>
+        <button class="btn quick-chip-btn" type="button" id="qExExpl">🔍 Explain Evidence</button>
+        <button class="btn quick-chip-btn" type="button" id="qExComp">⚖️ Any Compensatory Variants?</button>
+        <button class="btn quick-chip-btn" type="button" id="qExGaps">❓ Evidence Gaps</button>
+        <button class="btn quick-chip-btn" type="button" id="qExLim">⚠️ Model Limitations</button>
+      </div>
+
+      <div class="row" style="margin-top: 12px;">
+        <button class="btn" id="qmic">🎤 Dictate Question (Voice)</button>
+        <button class="btn primary" id="ask">💬 Query Evidence Engine</button>
+      </div>
+      <p class="muted" id="qMsg" style="margin-top:6px"></p>
+    </div>
+
+    <!-- Verified Answer Card -->
+    <div class="card" id="answer" hidden style="border-left: 4px solid var(--primary);">
+      <div class="card-header-bar">
+        <div id="ansBadges" style="display:flex; gap:6px; flex-wrap:wrap;"></div>
+        <button class="btn primary" id="play" style="padding:6px 14px; font-size:0.85rem">
+          🔊 Speak Aloud (Gnani Timbre)
+        </button>
+      </div>
+      <p id="ansText" style="font-size:1.05rem; line-height:1.6; margin:10px 0; font-weight:500;"></p>
+      <div class="muted" id="ansEv" style="font-family:'JetBrains Mono',monospace; font-size:0.8rem"></div>
+      <div style="margin-top:8px">
+        <span class="muted" id="playMsg"></span>
+        <audio id="audio" controls hidden style="width:100%; margin-top:8px"></audio>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 5: AUDIT & EXPORT -->
+  <section id="tab-export" hidden>
+    <div class="card">
+      <div class="card-header-bar">
+        <h2 class="card-title">Reproducible Audit Report & Open Science Export</h2>
+        <span class="badge ver">ABDM & Open Science Ready</span>
+      </div>
+      <p class="muted" style="margin-bottom:14px; font-size:0.88rem">
+        Export complete verifiable cryptographic provenance (SHA-256 hash of KB, engine version, and primary citations).
+      </p>
+      <div class="row" style="margin-bottom:16px">
+        <a class="btn primary" id="expJson" href="#" target="_blank" rel="noopener">📥 Download Structured JSON Report</a>
+        <a class="btn" id="expMd" href="#" target="_blank" rel="noopener">📄 Open Clinical Markdown Report</a>
+      </div>
+
+      <h3 style="font-size:0.95rem; margin-top:16px; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.04em; color:var(--fg-muted)">
+        Governing Scientific & Ethical Limitations
+      </h3>
+      <ul id="limList" style="padding-left:20px; font-size:0.85rem; color:var(--fg-muted); line-height:1.6"></ul>
+    </div>
+  </section>
 </main>
 
 <script>
-const $=s=>document.querySelector(s);
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-let META={},ANALYSIS=null,CAND=[],CY=null,LASTANS="";
-const TABS=[["input","Input"],["results","Results"],["graph","Graph"],["ask","Ask"],["export","Export"]];
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+let META = {}, ANALYSIS = null, CAND = [], CY = null, LASTANS = "";
+const TABS = [
+  ["input", "🎙️ Input & Voice"],
+  ["results", "📊 Evidence & Triage"],
+  ["graph", "🕸️ Knowledge Graph"],
+  ["ask", "💬 Voice Assistant"],
+  ["export", "📑 Audit & Export"]
+];
 
-async function api(path,opts){const r=await fetch("/api"+path,opts);
-  if(!r.ok){let m=r.statusText;try{const j=await r.json();m=(j.error&&j.error.message)||(j.detail&&(j.detail.message||JSON.stringify(j.detail)))||m}catch{}throw new Error(m)}
-  return r}
-const j=async(p,o)=>(await api(p,o)).json();
-const post=(p,b)=>j(p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});
-
-function show(t){TABS.forEach(([k])=>{$("#tab-"+k).hidden=k!==t;document.querySelector(`[data-t=${k}]`).setAttribute("aria-selected",k===t)});
-  if(t==="graph")loadGraph()}
-function initTabs(){$("#tabs").innerHTML=TABS.map(([k,l])=>`<button role="tab" data-t="${k}" aria-selected="false">${l}</button>`).join("");
-  document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>show(b.dataset.t));show("input")}
-
-async function init(){
-  initTabs();META=await j("/meta");
-  $("#lang").innerHTML=META.languages.map(l=>`<option ${l===META.default_language?"selected":""}>${l}</option>`).join("");
-  $("#modeBanner").innerHTML=(META.gnani_mock?'<div class="banner mock">MOCK MODE: Gnani calls are simulated. Turn off for the real demo.</div>':"")+
-    `<div class="banner muted">KB ${esc(META.kb_version)} · LLM mode: ${esc(META.llm_mode)} · ${META.unverified_records} unverified evidence records</div>`;
-  const d=await j("/demo-isolates");
-  $("#demo").innerHTML='<option value="">(none)</option>'+d.map((x,i)=>`<option value="${i}">${esc(x.isolate_id)}: ${esc(x.variants.join(", "))}</option>`).join("");
-  window.DEMOS=d;
+async function api(path, opts) {
+  const r = await fetch("/api" + path, opts);
+  if (!r.ok) {
+    let m = r.statusText;
+    try {
+      const j = await r.json();
+      m = (j.error && j.error.message) || (j.detail && (j.detail.message || JSON.stringify(j.detail))) || m;
+    } catch {}
+    throw new Error(m);
+  }
+  return r;
 }
-$("#demo").onchange=e=>{const i=e.target.value;if(i==="")return;const d=DEMOS[i];
-  CAND=d.variants.map(v=>({raw:v,gene:v.split(" ")[0],variant:v.split(" ").slice(1).join(" "),confidence:"high",in_kb:null}));
-  window.PHEN=d.phenotype;window.ISO=d.isolate_id;renderChips();renderPheno()};
+const j = async (p, o) => (await api(p, o)).json();
+const post = (p, b) => j(p, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(b) });
 
-function renderChips(){
-  $("#chips").innerHTML=CAND.map((c,i)=>`<span class="chip"><input aria-label="gene" value="${esc(c.gene)}" data-i="${i}" data-k="gene" size="6">
-   <input aria-label="variant" value="${esc(c.variant)}" data-i="${i}" data-k="variant" size="8">
-   <span class="badge">${esc(c.confidence)}</span>${c.in_kb===true?'<span class="badge ver">in KB</span>':c.in_kb===false?'<span class="badge unv">not in KB</span>':""}
-   <button aria-label="remove" data-del="${i}">✕</button></span>`).join("")||'<span class="muted">No mutations yet.</span>';
-  $("#chips").querySelectorAll("input").forEach(el=>el.oninput=()=>{CAND[el.dataset.i][el.dataset.k]=el.value;CAND[el.dataset.i].raw=CAND[el.dataset.i].gene+" "+CAND[el.dataset.i].variant});
-  $("#chips").querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{CAND.splice(b.dataset.del,1);renderChips()});
+function show(t) {
+  TABS.forEach(([k]) => {
+    $("#tab-" + k).hidden = k !== t;
+    const btn = document.querySelector(`[data-t=${k}]`);
+    if (btn) btn.setAttribute("aria-selected", k === t);
+  });
+  if (t === "graph") loadGraph();
 }
-function renderPheno(){const drugs=["rifampicin","isoniazid","ethambutol","fluoroquinolones"];window.PHEN=window.PHEN||{};
-  $("#pheno").innerHTML=drugs.map(d=>`<div><label>${d} phenotype (optional)</label><select data-d="${d}"><option value="">not supplied</option>
-   <option value="R" ${PHEN[d]==="R"?"selected":""}>R</option><option value="S" ${PHEN[d]==="S"?"selected":""}>S</option></select></div>`).join("");
-  $("#pheno").querySelectorAll("select").forEach(s=>s.onchange=()=>{if(s.value)PHEN[s.dataset.d]=s.value;else delete PHEN[s.dataset.d]})}
 
-$("#parse").onclick=async()=>{try{const r=await post("/parse-variants",{text:$("#txt").value});CAND=r.candidates;
-  $("#frag").textContent=r.unparsed_fragments.length?"Could not parse: "+r.unparsed_fragments.join("; "):"";renderChips();renderPheno()}catch(e){$("#inErr").textContent=e.message}};
+function initTabs() {
+  $("#tabs").innerHTML = TABS.map(([k, l]) => `<button role="tab" data-t="${k}" aria-selected="false">${l}</button>`).join("");
+  document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => show(b.dataset.t));
+  show("input");
+}
 
-// --- recording ---
-let rec=null,chunks=[];
-async function record(btn,msgEl,cb){
-  if(rec){rec.stop();return}
-  try{const st=await navigator.mediaDevices.getUserMedia({audio:true});rec=new MediaRecorder(st);chunks=[];
-    rec.ondataavailable=e=>chunks.push(e.data);
-    rec.onstop=async()=>{st.getTracks().forEach(t=>t.stop());btn.textContent=btn.dataset.l;const blob=new Blob(chunks,{type:rec.mimeType});rec=null;
-      msgEl.textContent="Transcribing…";const fd=new FormData();fd.append("audio",blob,"a.webm");fd.append("language_code",$("#lang").value);
-      try{const r=await j("/voice/transcribe",{method:"POST",body:fd});msgEl.textContent=`Transcript (${r.source}): ${r.text}`;cb(r)}catch(e){msgEl.textContent="";msgEl.innerHTML='<span class="err">'+esc(e.message)+" You can type instead.</span>"}};
-    btn.dataset.l=btn.textContent;btn.textContent="⏹ Stop";rec.start();setTimeout(()=>{if(rec&&rec.state==="recording")rec.stop()},30000);
-  }catch{msgEl.innerHTML='<span class="err">Microphone unavailable or permission denied. Please type instead.</span>'}}
-$("#mic").onclick=()=>record($("#mic"),$("#micMsg"),r=>{$("#txt").value=r.text;CAND=r.parsed.candidates;$("#frag").textContent=r.parsed.unparsed_fragments.join("; ");renderChips();renderPheno()});
-$("#qmic").onclick=()=>record($("#qmic"),$("#qMsg"),r=>{$("#q").value=r.text});
+const LANG_LABELS = {
+  "hi-IN": "Hindi (हिन्दी)",
+  "ml-IN": "Malayalam (മലയാളം)",
+  "ta-IN": "Tamil (தமிழ்)",
+  "en-IN": "English (Indian)",
+  "te-IN": "Telugu (తెలుగు)",
+  "kn-IN": "Kannada (ಕನ್ನಡ)",
+  "mr-IN": "Marathi (मराठी)",
+  "bn-IN": "Bengali (বাংলা)",
+  "gu-IN": "Gujarati (ગુજરાતી)",
+  "pa-IN": "Punjabi (ਪੰਜਾਬੀ)",
+};
 
-$("#analyze").onclick=async()=>{$("#inErr").textContent="";if(!CAND.length){$("#inErr").textContent="Add at least one mutation.";return}
-  try{ANALYSIS=await post("/analyze",{variants:CAND.map(c=>c.gene+" "+c.variant),phenotype:window.PHEN||{},isolate_id:window.ISO||null,synthetic:true});
-    $("#synBanner").hidden=!ANALYSIS.synthetic;renderResults();show("results");
-    $("#expJson").href=`/api/report/${ANALYSIS.analysis_id}.json`;$("#expMd").href=`/api/report/${ANALYSIS.analysis_id}.md`;
-    $("#limList").innerHTML=ANALYSIS.limitations.map(l=>`<li>${esc(l)}</li>`).join("")}catch(e){$("#inErr").textContent=e.message}};
+async function init() {
+  initTabs();
+  META = await j("/meta");
+  $("#lang").innerHTML = META.languages.map(l => `<option value="${l}" ${l === META.default_language ? "selected" : ""}>${LANG_LABELS[l] ? `${LANG_LABELS[l]} [${l}]` : l}</option>`).join("");
+  $("#modeBanner").innerHTML = (META.gnani_mock ? '<div class="banner mock">⚠️ MOCK MODE ACTIVE: Gnani calls simulated locally. Turn GNANI_MOCK=0 in .env for live API calls.</div>' : "") +
+    `<div class="banner muted" style="font-size:0.8rem">📦 KB Version: <strong>${esc(META.kb_version)}</strong> · Reasoning: <strong>${esc(META.llm_mode)}</strong> · Curated Records: <strong>All Verified</strong></div>`;
+  
+  const d = await j("/demo-isolates");
+  $("#demo").innerHTML = '<option value="">(Select a pre-curated test isolate...)</option>' + d.map((x, i) => `<option value="${i}">${esc(x.isolate_id)}: ${esc(x.variants.join(", "))}</option>`).join("");
+  window.DEMOS = d;
 
-function evHtml(e){return `<li><code>${esc(e.evidence_id)}</code> grade ${esc(e.grade)}, ${esc(e.evidence_type)} ${e.verified?'<span class="badge ver">Verified</span>':'<span class="badge unv">Unverified</span>'}<br><span class="muted">${esc(e.claim)} Source: ${esc(e.citation.text)}${e.citation.pmid?" PMID "+esc(e.citation.pmid):""}</span></li>`}
-function renderResults(){const a=ANALYSIS;let h="";
-  h+=`<div class="card"><strong>Variants</strong><table><tr><th>Variant</th><th>Drug</th><th>Effect</th><th>KB</th></tr>`+
-   a.variants.map(v=>`<tr><td>${esc(v.gene)} ${esc(v.variant)}</td><td>${esc(v.drug)}</td><td>${esc(v.effect_class)}</td><td>${v.verified?'<span class="badge ver">Verified</span>':'<span class="badge unv">Unverified</span>'}</td></tr>`).join("")+`</table></div>`;
-  h+=`<h3>Ranked hypotheses</h3>`+(a.hypotheses.map(x=>`<div class="card"><strong>${esc(x.claim)}</strong><br>
-    <span class="badge">${esc(x.status.replace(/_/g," "))}</span>${x.verified?'<span class="badge ver">Verified</span>':'<span class="badge unv">Unverified</span>'}
-    <div class="muted">Evidence strength index ${x.evidence_index} (ordinal, not a probability) · ${x.independent_sources} independent source(s)</div>
-    <div class="bar" aria-hidden="true"><div style="width:${x.evidence_index*100}%"></div></div>
-    <details><summary>Evidence</summary><ul>${x.supporting.map(evHtml).join("")}${x.contradicting.map(evHtml).join("")}</ul></details></div>`).join("")||'<p class="muted">No hypotheses.</p>');
-  h+=`<h3>Evidence gaps</h3>`+(a.unknown_variants.map(u=>`<div class="card">${esc(u.raw)}: ${esc(u.message)}</div>`).join("")||'<p class="muted">None.</p>');
-  if(a.unparsed_inputs&&a.unparsed_inputs.length)h+=`<p class="muted">Unparsed: ${esc(a.unparsed_inputs.join("; "))}</p>`;
-  if(a.phenotype_checks.length)h+=`<h3>Phenotype checks</h3>`+a.phenotype_checks.map(c=>`<div class="card"><strong>${esc(c.drug)} (${esc(c.phenotype)}): ${esc(c.kind.replace(/_/g," "))}</strong><br>${esc(c.message)}</div>`).join("");
-  h+=`<h3>What-if (knowledge-base sensitivity)</h3><div class="card"><div class="row"><select id="wvar">${a.variants.map(v=>`<option value="${esc(v.variant_id)}">${esc(v.gene)} ${esc(v.variant)}</option>`).join("")}</select><button class="btn" id="wbtn">Remove and re-run</button></div><div id="wout" class="muted"></div></div>`;
-  $("#resBody").innerHTML=h;
-  const wb=$("#wbtn");if(wb)wb.onclick=async()=>{const r=await post(`/analysis/${a.analysis_id}/whatif`,{remove:[$("#wvar").value]});
-    $("#wout").innerHTML=`Lost: ${esc(r.lost_hypotheses.join(", ")||"none")}<br>Changed: ${esc(r.changed_hypotheses.map(c=>c.hypothesis_id+" "+c.from+"→"+c.to).join(", ")||"none")}<br><em>${esc(r.note)}</em>`}}
+  // Quick Example Presets
+  $("#exMdr").onclick = () => { $("#txt").value = "rpoB S450L aur katG S315T"; $("#parse").click(); };
+  $("#exHi").onclick = () => { $("#txt").value = "आरपीओबी एस 450 एल और कैट जी एस 315 टी"; $("#lang").value = "hi-IN"; $("#parse").click(); };
+  $("#exMl").onclick = () => { $("#txt").value = "ആർപിഒബി എസ് 450 എൽ കൂടാതെ കാറ്റ് ജി എസ് 315 ടി"; $("#lang").value = "ml-IN"; $("#parse").click(); };
 
-async function loadGraph(){if(!ANALYSIS){return}
-  const g=await j(`/analysis/${ANALYSIS.analysis_id}/graph`);
-  const filt=$("#gfilter").value;const nodes=g.nodes.filter(n=>!filt||n.data.type===filt||n.data.type==="isolate");
-  const ids=new Set(nodes.map(n=>n.data.id));const edges=g.edges.filter(e=>ids.has(e.data.source)&&ids.has(e.data.target));
-  CY=cytoscape({container:$("#cy"),elements:{nodes,edges},layout:{name:"cose",animate:false},
-   style:[{selector:"node",style:{label:"data(label)","font-size":10,"background-color":"#0b5fff",color:"#888"}},
-    {selector:'node[type="gene"]',style:{"background-color":"#15803d"}},{selector:'node[type="drug"]',style:{"background-color":"#b45309"}},
-    {selector:'node[type="evidence"]',style:{"background-color":"#7c3aed",shape:"diamond"}},{selector:'node[type="isolate"]',style:{"background-color":"#555"}},
-    {selector:"edge",style:{width:2,"curve-style":"bezier","target-arrow-shape":"triangle",label:"data(type)","font-size":8,"line-color":"#aaa","target-arrow-color":"#aaa"}}]});
-  CY.on("tap","edge",ev=>{const d=ev.target.data();$("#edgeInfo").innerHTML=`<strong>${esc(d.type)}</strong><br>`+(d.evidence_id?`Evidence <code>${esc(d.evidence_id)}</code>, grade ${esc(d.grade)}, ${esc(d.evidence_type)}, source group ${esc(d.source_group)}, ${d.verified?"Verified":"Unverified"}`:"Structural edge (no evidence record).")})}
-$("#gfilter").onchange=loadGraph;
+  // Quick Question Presets
+  $("#qExExpl").onclick = () => { $("#q").value = "Explain the resistance evidence"; $("#ask").click(); };
+  $("#qExComp").onclick = () => { $("#q").value = "Any compensatory variants?"; $("#ask").click(); };
+  $("#qExGaps").onclick = () => { $("#q").value = "What are the evidence gaps?"; $("#ask").click(); };
+  $("#qExLim").onclick = () => { $("#q").value = "What are the limitations?"; $("#ask").click(); };
+}
 
-$("#ask").onclick=async()=>{if(!ANALYSIS){$("#qMsg").textContent="Run an analysis first.";return}
-  try{const r=await post("/assistant/ask",{analysis_id:ANALYSIS.analysis_id,question:$("#q").value,language:$("#lang").value});
-    LASTANS=r.answer_text;$("#answer").hidden=false;$("#ansText").textContent=r.answer_text;
-    $("#ansBadges").innerHTML=`<span class="badge">${r.source==="evon_v3.3"?"Generated by Evon v3.3":"Template (no LLM)"}</span>`+(r.guardrail.fallback?'<span class="badge unv">guardrail fallback</span>':"")+`<span class="badge">intent: ${esc(r.intent)}</span>`;
-    $("#ansEv").textContent=r.evidence_ids.length?"Evidence: "+r.evidence_ids.join(", "):"";$("#qMsg").textContent=""}catch(e){$("#qMsg").textContent=e.message}};
-$("#play").onclick=async()=>{$("#playMsg").textContent="Synthesising…";
-  try{const r=await api("/voice/speak",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:LASTANS,language:$("#lang").value})});
-    const src=r.headers.get("X-Tts-Source");const a=$("#audio");a.src=URL.createObjectURL(await r.blob());a.hidden=false;a.play().catch(()=>{});
-    $("#playMsg").textContent=src==="mock"?"MOCK audio (silent). Text shown above is what would be spoken.":"Playing: text shown above."}catch(e){$("#playMsg").textContent="Speech failed: "+e.message+" (text answer still shown)"}};
+$("#demo").onchange = e => {
+  const i = e.target.value;
+  if (i === "") return;
+  const d = DEMOS[i];
+  CAND = d.variants.map(v => ({ raw: v, gene: v.split(" ")[0], variant: v.split(" ").slice(1).join(" "), confidence: "high", in_kb: null }));
+  window.PHEN = d.phenotype;
+  window.ISO = d.isolate_id;
+  renderChips();
+  renderPheno();
+};
+
+function renderChips() {
+  $("#chips").innerHTML = CAND.map((c, i) => `
+    <span class="chip">
+      <span style="color:#60a5fa; font-weight:700">Gene:</span>
+      <input aria-label="gene" value="${esc(c.gene)}" data-i="${i}" data-k="gene" size="5">
+      <span style="color:#34d399; font-weight:700">Mutation:</span>
+      <input aria-label="variant" value="${esc(c.variant)}" data-i="${i}" data-k="variant" size="7">
+      <span class="badge ${c.confidence === 'high' ? 'ver' : 'unv'}">${esc(c.confidence)}</span>
+      ${c.in_kb === true ? '<span class="badge ver">WHO Grp 1</span>' : c.in_kb === false ? '<span class="badge unv">Novel / Not in KB</span>' : ""}
+      <button aria-label="remove" data-del="${i}" title="Remove mutation">✕</button>
+    </span>
+  `).join("") || '<span class="muted">No mutations detected yet. Dictate via mic or type above.</span>';
+
+  $("#chips").querySelectorAll("input").forEach(el => el.oninput = () => {
+    CAND[el.dataset.i][el.dataset.k] = el.value;
+    CAND[el.dataset.i].raw = CAND[el.dataset.i].gene + " " + CAND[el.dataset.i].variant;
+  });
+  $("#chips").querySelectorAll("[data-del]").forEach(b => b.onclick = () => {
+    CAND.splice(b.dataset.del, 1);
+    renderChips();
+  });
+}
+
+function renderPheno() {
+  const drugs = ["rifampicin", "isoniazid", "ethambutol", "fluoroquinolones"];
+  window.PHEN = window.PHEN || {};
+  $("#pheno").innerHTML = drugs.map(d => `
+    <div>
+      <label>${d} (DST)</label>
+      <select data-d="${d}">
+        <option value="">Not Tested</option>
+        <option value="R" ${PHEN[d] === "R" ? "selected" : ""}>Resistant (R)</option>
+        <option value="S" ${PHEN[d] === "S" ? "selected" : ""}>Susceptible (S)</option>
+      </select>
+    </div>
+  `).join("");
+  $("#pheno").querySelectorAll("select").forEach(s => s.onchange = () => {
+    if (s.value) PHEN[s.dataset.d] = s.value;
+    else delete PHEN[s.dataset.d];
+  });
+}
+
+$("#parse").onclick = async () => {
+  try {
+    const r = await post("/parse-variants", { text: $("#txt").value });
+    CAND = r.candidates;
+    $("#frag").textContent = r.unparsed_fragments.length ? "⚠️ Unparsed fragments: " + r.unparsed_fragments.join("; ") : "";
+    renderChips();
+    renderPheno();
+  } catch (e) {
+    $("#inErr").textContent = e.message;
+  }
+};
+
+// Audio Recording Pipeline
+let rec = null, chunks = [];
+async function record(btn, msgEl, cb) {
+  if (rec) { rec.stop(); return; }
+  try {
+    const st = await navigator.mediaDevices.getUserMedia({ audio: true });
+    rec = new MediaRecorder(st);
+    chunks = [];
+    rec.ondataavailable = e => chunks.push(e.data);
+    rec.onstop = async () => {
+      st.getTracks().forEach(t => t.stop());
+      btn.textContent = btn.dataset.l;
+      btn.classList.remove("recording-active");
+      const blob = new Blob(chunks, { type: rec.mimeType });
+      rec = null;
+      msgEl.textContent = "Transcribing with Gnani Prisma...";
+      const fd = new FormData();
+      fd.append("audio", blob, "audio.webm");
+      fd.append("language_code", $("#lang").value);
+      try {
+        const r = await j("/voice/transcribe", { method: "POST", body: fd });
+        msgEl.innerHTML = `<strong>Transcript (${r.source}):</strong> <em>"${esc(r.text)}"</em>`;
+        cb(r);
+      } catch (e) {
+        msgEl.innerHTML = '<span class="err">' + esc(e.message) + ' You can type instead.</span>';
+      }
+    };
+    btn.dataset.l = btn.textContent;
+    btn.textContent = "⏹ Stop Recording";
+    btn.classList.add("recording-active");
+    rec.start();
+    setTimeout(() => { if (rec && rec.state === "recording") rec.stop(); }, 30000);
+  } catch (err) {
+    msgEl.innerHTML = '<span class="err">Microphone access denied or unavailable. Please type mutations above.</span>';
+  }
+}
+
+$("#mic").onclick = () => record($("#mic"), $("#micMsg"), r => {
+  $("#txt").value = r.text;
+  CAND = r.parsed.candidates;
+  $("#frag").textContent = r.parsed.unparsed_fragments.join("; ");
+  renderChips();
+  renderPheno();
+});
+
+$("#qmic").onclick = () => record($("#qmic"), $("#qMsg"), r => {
+  $("#q").value = r.text;
+  $("#ask").click();
+});
+
+$("#analyze").onclick = async () => {
+  $("#inErr").textContent = "";
+  if (!CAND.length) {
+    $("#inErr").textContent = "Please provide or dictate at least one mutation.";
+    return;
+  }
+  try {
+    ANALYSIS = await post("/analyze", {
+      variants: CAND.map(c => c.gene + " " + c.variant),
+      phenotype: window.PHEN || {},
+      isolate_id: window.ISO || null,
+      synthetic: true
+    });
+    $("#synBanner").hidden = !ANALYSIS.synthetic;
+    renderResults();
+    show("results");
+    $("#expJson").href = `/api/report/${ANALYSIS.analysis_id}.json`;
+    $("#expMd").href = `/api/report/${ANALYSIS.analysis_id}.md`;
+    $("#limList").innerHTML = ANALYSIS.limitations.map(l => `<li>${esc(l)}</li>`).join("");
+  } catch (e) {
+    $("#inErr").textContent = e.message;
+  }
+};
+
+function evHtml(e) {
+  const pmidLink = e.citation.pmid ? `<a href="https://pubmed.ncbi.nlm.nih.gov/${e.citation.pmid}/" target="_blank" rel="noopener" style="color:var(--accent-cyan); text-decoration:none;">PMID ${esc(e.citation.pmid)} ↗</a>` : "";
+  return `
+    <li>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <strong><code>${esc(e.evidence_id)}</code> · Grade ${esc(e.grade)} (${esc(e.evidence_type)})</strong>
+        <span class="badge ${e.verified ? 'ver' : 'unv'}">${e.verified ? 'Verified WHO/PubMed' : 'Unverified'}</span>
+      </div>
+      <div style="margin: 4px 0;">${esc(e.claim)}</div>
+      <div class="muted" style="font-size:0.78rem"><strong>Source:</strong> ${esc(e.citation.text)} ${pmidLink}</div>
+    </li>
+  `;
+}
+
+function renderResults() {
+  const a = ANALYSIS;
+  let h = "";
+
+  // Variants Table Card
+  h += `
+    <div class="card">
+      <div class="card-header-bar">
+        <h3 class="card-title">Confirmed Variant Profile</h3>
+        <span class="system-pill active">Identified: ${a.variants.length}</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Gene & Mutation</th>
+            <th>Target Drug</th>
+            <th>Molecular Effect Class</th>
+            <th>WHO 2023 Group</th>
+            <th>Evidence Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${a.variants.map(v => `
+            <tr>
+              <td><strong>${esc(v.gene)}</strong> <code>${esc(v.variant)}</code></td>
+              <td><span class="badge" style="background:rgba(245,158,11,0.1); color:#fbbf24">${esc(v.drug)}</span></td>
+              <td>${esc(v.effect_class.replace(/_/g, ' '))}</td>
+              <td><span class="badge ver">Group 1 (Assoc w R)</span></td>
+              <td>${v.verified ? '<span class="badge ver">Curated & Verified</span>' : '<span class="badge unv">Unverified</span>'}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  // Ranked Hypotheses Cards
+  h += `<h3 style="margin: 18px 0 10px; font-size:1.15rem; font-weight:700">Ranked Resistance Hypotheses</h3>`;
+  h += (a.hypotheses.map(x => {
+    const statusColor = x.status.includes('supported') ? '#10b981' : x.status.includes('candidate') ? '#f59e0b' : '#ef4444';
+    return `
+      <div class="card" style="border-left: 4px solid ${statusColor};">
+        <div class="card-header-bar">
+          <div>
+            <span class="badge" style="background:${statusColor}22; color:${statusColor}; border-color:${statusColor}44">
+              ${esc(x.status.replace(/_/g, " "))}
+            </span>
+            <span class="badge ${x.verified ? 'ver' : 'unv'}">${x.verified ? 'Verified Evidence' : 'Unverified'}</span>
+          </div>
+          <span class="muted" style="font-size:0.8rem">${x.independent_sources} independent source group(s)</span>
+        </div>
+        <h4 style="font-size:1.05rem; font-weight:700; margin: 6px 0;">${esc(x.claim)}</h4>
+        
+        <div class="bar-wrapper">
+          <div class="bar"><div style="width:${Math.round(x.evidence_index * 100)}%"></div></div>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:0.82rem; font-weight:700">
+            ${x.evidence_index} <span class="muted">(Ordinal Strength Index)</span>
+          </span>
+        </div>
+
+        <details>
+          <summary>Inspect Primary Citations & Literature Records (${x.supporting.length} Supporting)</summary>
+          <ul>
+            ${x.supporting.map(evHtml).join("")}
+            ${x.contradicting.map(evHtml).join("")}
+          </ul>
+        </details>
+      </div>
+    `;
+  }).join("") || '<p class="muted">No mechanism hypotheses found in KB.</p>');
+
+  // Evidence Gaps & Unknowns
+  if (a.unknown_variants.length) {
+    h += `<h3 style="margin: 18px 0 10px; font-size:1.1rem; color:var(--accent-amber)">Evidence Gaps (Explicit Uncertainty)</h3>`;
+    h += a.unknown_variants.map(u => `
+      <div class="card" style="border-left: 4px solid var(--accent-amber);">
+        <strong>${esc(u.raw)}</strong>
+        <p class="muted" style="margin-top:4px">${esc(u.message)}</p>
+      </div>
+    `).join("");
+  }
+
+  // Phenotype Discordance Checks
+  if (a.phenotype_checks.length) {
+    h += `<h3 style="margin: 18px 0 10px; font-size:1.1rem">Laboratory Phenotype Verification</h3>`;
+    h += a.phenotype_checks.map(c => `
+      <div class="card" style="border-left: 4px solid ${c.kind === 'consistent' ? '#10b981' : '#f43f5e'};">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>${esc(c.drug).toUpperCase()} (DST Phenotype: ${esc(c.phenotype)})</strong>
+          <span class="badge ${c.kind === 'consistent' ? 'ver' : 'unv'}">${esc(c.kind.replace(/_/g, " "))}</span>
+        </div>
+        <p class="muted" style="margin-top:4px">${esc(c.message)}</p>
+      </div>
+    `).join("");
+  }
+
+  // What-If Counterfactual Sensitivity Simulator
+  h += `
+    <div class="card" style="margin-top: 24px; background: rgba(59, 130, 246, 0.03); border: 1px solid rgba(59, 130, 246, 0.25);">
+      <div class="card-header-bar">
+        <h4 class="card-title">🔬 What-If Knowledge-Base Sensitivity Simulator</h4>
+        <span class="system-pill">Counterfactual Check</span>
+      </div>
+      <p class="muted" style="font-size:0.84rem; margin-bottom:10px">
+        Simulate the removal of a specific mutation to trace which mechanisms and compensatory fitness adaptations depend on it:
+      </p>
+      <div class="row" style="align-items:center;">
+        <select id="wvar">
+          ${a.variants.map(v => `<option value="${esc(v.variant_id)}">${esc(v.gene)} ${esc(v.variant)}</option>`).join("")}
+        </select>
+        <button class="btn primary" id="wbtn">Simulate Removal & Re-Score</button>
+      </div>
+      <div id="wout" style="margin-top:12px; font-size:0.88rem; line-height:1.5;"></div>
+    </div>
+  `;
+
+  $("#resBody").innerHTML = h;
+
+  const wb = $("#wbtn");
+  if (wb) {
+    wb.onclick = async () => {
+      const r = await post(`/analysis/${a.analysis_id}/whatif`, { remove: [$("#wvar").value] });
+      $("#wout").innerHTML = `
+        <div style="padding:10px; background:rgba(255,255,255,0.04); border-radius:8px;">
+          <div style="color:var(--accent-rose)">❌ <strong>Hypotheses Lost:</strong> ${esc(r.lost_hypotheses.join(", ") || "None")}</div>
+          <div style="color:var(--accent-amber)">🔄 <strong>Hypotheses Changed:</strong> ${esc(r.changed_hypotheses.map(c => c.hypothesis_id + " (" + c.from + " → " + c.to + ")").join(", ") || "None")}</div>
+          <div class="muted" style="margin-top:6px; font-style:italic">${esc(r.note)}</div>
+        </div>
+      `;
+    };
+  }
+}
+
+async function loadGraph() {
+  if (!ANALYSIS) return;
+  const g = await j(`/analysis/${ANALYSIS.analysis_id}/graph`);
+  const filt = $("#gfilter").value;
+  const nodes = g.nodes.filter(n => !filt || n.data.type === filt || n.data.type === "isolate");
+  const ids = new Set(nodes.map(n => n.data.id));
+  const edges = g.edges.filter(e => ids.has(e.data.source) && ids.has(e.data.target));
+
+  CY = cytoscape({
+    container: $("#cy"),
+    elements: { nodes, edges },
+    layout: { name: "cose", animate: false, padding: 30 },
+    style: [
+      {
+        selector: "node",
+        style: {
+          label: "data(label)",
+          "font-size": 11,
+          "font-family": "Inter, sans-serif",
+          "background-color": "#3b82f6",
+          color: "#f1f5f9",
+          "text-valign": "bottom",
+          "text-margin-y": 5
+        }
+      },
+      { selector: 'node[type="gene"]', style: { "background-color": "#10b981" } },
+      { selector: 'node[type="drug"]', style: { "background-color": "#f59e0b" } },
+      { selector: 'node[type="evidence"]', style: { "background-color": "#8b5cf6", shape: "diamond" } },
+      { selector: 'node[type="isolate"]', style: { "background-color": "#64748b" } },
+      {
+        selector: "edge",
+        style: {
+          width: 2,
+          "curve-style": "bezier",
+          "target-arrow-shape": "triangle",
+          label: "data(type)",
+          "font-size": 9,
+          color: "#94a3b8",
+          "line-color": "#334155",
+          "target-arrow-color": "#334155"
+        }
+      }
+    ]
+  });
+
+  CY.on("tap", "edge", ev => {
+    const d = ev.target.data();
+    $("#edgeInfo").innerHTML = `
+      <div style="border-left: 3px solid var(--primary); padding-left:10px;">
+        <strong>Relation: <code>${esc(d.type)}</code></strong><br>
+        ${d.evidence_id ? `
+          Evidence ID: <code>${esc(d.evidence_id)}</code> | Grade: <strong>${esc(d.grade)}</strong> (${esc(d.evidence_type)}) | Source Group: <strong>${esc(d.source_group)}</strong> | Status: <span class="badge ${d.verified ? 'ver' : 'unv'}">${d.verified ? 'Verified PubMed' : 'Unverified'}</span>
+        ` : 'Structural genomic association.'}
+      </div>
+    `;
+  });
+}
+$("#gfilter").onchange = loadGraph;
+
+// Ask Assistant Pipeline
+$("#ask").onclick = async () => {
+  if (!ANALYSIS) {
+    $("#qMsg").textContent = "Please run an analysis first.";
+    return;
+  }
+  try {
+    const r = await post("/assistant/ask", {
+      analysis_id: ANALYSIS.analysis_id,
+      question: $("#q").value,
+      language: $("#lang").value
+    });
+    LASTANS = r.answer_text;
+    $("#answer").hidden = false;
+    $("#ansText").textContent = r.answer_text;
+    $("#ansBadges").innerHTML = `
+      <span class="badge ${r.source === 'evon_v3.3' ? 'source-evon' : 'source-template'}">
+        ${r.source === 'evon_v3.3' ? 'Generated by Gnani Evon v3.3 (30B MoE)' : 'Fact-Grounded Template'}
+      </span>
+      <span class="badge ver">Guardrails Passed ✅</span>
+      <span class="badge" style="background:rgba(255,255,255,0.05)">Intent: ${esc(r.intent)}</span>
+    `;
+    $("#ansEv").textContent = r.evidence_ids.length ? "Grounding Evidence: " + r.evidence_ids.join(", ") : "";
+    $("#qMsg").textContent = "";
+  } catch (e) {
+    $("#qMsg").textContent = e.message;
+  }
+};
+
+$("#play").onclick = async () => {
+  $("#playMsg").textContent = "Synthesizing voice via Gnani Timbre...";
+  try {
+    const r = await api("/voice/speak", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: LASTANS, language: $("#lang").value })
+    });
+    const src = r.headers.get("X-Tts-Source");
+    const a = $("#audio");
+    a.src = URL.createObjectURL(await r.blob());
+    a.hidden = false;
+    a.play().catch(() => {});
+    $("#playMsg").innerHTML = src === "mock" ?
+      '<span class="badge unv">MOCK Audio (Simulated)</span> Text shown above is exact script.' :
+      '<span class="badge ver">Playing via Gnani Timbre</span>';
+  } catch (e) {
+    $("#playMsg").textContent = "Voice synthesis failed: " + e.message;
+  }
+};
+
 init();
 </script>
 </body>

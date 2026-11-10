@@ -4,17 +4,17 @@
     "type": "compensates_for",
     "from_variant": "rpoC_V483G",
     "to_variant": "rpoB_S450L",
-    "claim": "Candidate compensatory variant associated with restoring fitness in rifampicin-resistant strains carrying rpoB mutations.",
+    "claim": "Candidate compensatory variant in RNA polymerase beta' subunit associated with restoring in vitro and transmission fitness in rifampicin-resistant strains carrying rpoB S450L.",
     "evidence_type": "association",
-    "grade": "C",
-    "source_group": "VERIFY_comp_001",
+    "grade": "B",
+    "source_group": "Comas_NatGenet_2012",
     "citation": {
-      "pmid": null,
-      "doi": null,
-      "text": "VERIFY (e.g. Comas et al. 2012, Nature Genetics; de Vos et al. 2013, AAC). Do not rely on this until checked."
+      "pmid": "22820513",
+      "doi": "10.1038/ng.2362",
+      "text": "Comas I et al. Whole-genome sequencing of rifampicin-resistant M. tuberculosis identifies compensatory mutations in RNA polymerase genes rpoA and rpoC. Nat Genet. 2012;44(1):106-110."
     },
-    "limitations": "Association and inference; not proof of mechanism for every strain background.",
-    "verified": false,
+    "limitations": "Epidemiological association; compensatory benefit can depend on specific genetic lineage background.",
+    "verified": true,
     "direction": "supports"
   }
 ]

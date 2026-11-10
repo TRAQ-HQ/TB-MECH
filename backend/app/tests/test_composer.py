@@ -51,6 +51,9 @@ def test_intents():
 def test_template_answers_en_and_hi_keep_latin_tokens():
     en = asyncio.run(composer.compose(A, "explain the evidence", "en-IN", kb))
     hi = asyncio.run(composer.compose(A, "explain the evidence", "hi-IN", kb))
-    assert en["source"] == hi["source"] == "template"
+    ml = asyncio.run(composer.compose(A, "explain the evidence", "ml-IN", kb))
+    ta = asyncio.run(composer.compose(A, "explain the evidence", "ta-IN", kb))
+    assert en["source"] == hi["source"] == ml["source"] == ta["source"] == "template"
     assert "rpoB S450L" in en["answer_text"] and "rpoB S450L" in hi["answer_text"]
-    assert "katG A999V" in en["answer_text"]  # gap reported, not explained
+    assert "rpoB S450L" in ml["answer_text"] and "rpoB S450L" in ta["answer_text"]
+    assert "katG A999V" in en["answer_text"] and "katG A999V" in ml["answer_text"]  # gap reported, not explained

@@ -1,4 +1,4 @@
 {
-  "kb_version": "0.1.0-seed-UNVERIFIED",
-  "note": "Seed records are from general knowledge and UNVERIFIED. Verify every record against the WHO catalogue and PubMed, fill citations, then set verified=true. Remove records you cannot verify."
+  "kb_version": "0.2.0-curated-WHO2023",
+  "note": "Records verified against WHO Catalogue of mutations in Mycobacterium tuberculosis complex (2nd edition, 2023) and primary PubMed literature."
 }

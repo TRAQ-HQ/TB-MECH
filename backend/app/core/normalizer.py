@@ -20,8 +20,20 @@ HI_NAMES = {"ए": "A", "बी": "B", "सी": "C", "डी": "D", "ई": "E",
             "एच": "H", "आई": "I", "जे": "J", "के": "K", "एल": "L", "एम": "M", "एन": "N",
             "ओ": "O", "पी": "P", "क्यू": "Q", "आर": "R", "एस": "S", "टी": "T", "यू": "U",
             "वी": "V", "डब्ल्यू": "W", "एक्स": "X", "वाई": "Y", "जेड": "Z"}
+ML_NAMES = {"ആർ": "R", "പി": "P", "ഒ": "O", "ബി": "B", "സി": "C", "ഡി": "D",
+            "ഇ": "E", "എഫ്": "F", "ജി": "G", "എച്ച്": "H", "ഐ": "I", "ജെ": "J",
+            "കെ": "K", "എൽ": "L", "എം": "M", "എൻ": "N", "ക്യു": "Q", "എസ്": "S",
+            "ടി": "T", "യു": "U", "വി": "V", "ഡബ്ല്യു": "W", "എക്സ്": "X", "വൈ": "Y", "സെഡ്": "Z"}
+TA_NAMES = {"ஏ": "A", "பி": "B", "சி": "C", "டி": "D", "இ": "E", "எப்": "F", "ஜி": "G",
+            "ஹெச்": "H", "ஐ": "I", "ஜே": "J", "கே": "K", "எல்": "L", "எம்": "M", "என்": "N",
+            "ஓ": "O", "ஆர்": "R", "எஸ்": "S", "டி": "T", "யு": "U", "வி": "V"}
 SINGLE = {c.lower(): c for c in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"}
-LETTER_MAP = {**SINGLE, **EN_NAMES, **{unicodedata.normalize("NFC", k): v for k, v in HI_NAMES.items()}}
+LETTER_MAP = {
+    **SINGLE, **EN_NAMES,
+    **{unicodedata.normalize("NFC", k): v for k, v in HI_NAMES.items()},
+    **{unicodedata.normalize("NFC", k): v for k, v in ML_NAMES.items()},
+    **{unicodedata.normalize("NFC", k): v for k, v in TA_NAMES.items()},
+}
 LETTER_TO_NAME = {"A": "ay", "B": "bee", "C": "see", "D": "dee", "G": "gee"}
 
 UNITS = {"zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7,
@@ -119,6 +131,7 @@ def parse_text(text: str, kb: KnowledgeBase) -> dict:
     raw = unicodedata.normalize("NFC", text or "")
     t = re.sub(r"[,;।]", " ", raw)
     t = re.sub(r"\bminus\b", "-", t, flags=re.I)
+    t = re.sub(r"\b(and|aur|और|കൂടാതെ|പിന്നെ|മற்றும்)\b", " ", t, flags=re.I)
     t = _words_to_digits(t)
 
     spoken: set[str] = set()
